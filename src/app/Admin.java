@@ -315,9 +315,36 @@ public final class Admin {
                     users.remove(user);
                     return username + " was successfully deleted.";
                 } else {
-                    return username + " can't be deleted.";
-                    // todo : add functionality for deleting artists and hosts
-                    // if no one is listening to their songs or podcasts
+                    if (user instanceof Artist) {
+                        for (User user2 : users) {
+                            assert user2.getPlayer().getCurrentAudioFile() != null;
+                            if ((user2.getPlayer().getCurrentAudioFile() != null &&
+                                    user2.getPlayer().getCurrentAudioFile().matchesArtist(username))) {
+                                return username + " can't be deleted.";
+                            }
+                        }
+                        songs.removeIf(song -> song.getArtist().equals(username));
+                        for (User user2 : users) {
+                            for (Song likedSong : user2.getLikedSongs()) {
+                                if (likedSong.getArtist().equals(username)) {
+                                    user2.getLikedSongs().remove(likedSong);
+                                    break;
+                                }
+                            }
+                        }
+                        users.remove(user);
+                        return username + " was successfully deleted.";
+                    } else {
+                        for (User user2 : users) {
+                            assert user2.getPlayer().getCurrentAudioFile() != null;
+                            if (user2.getPlayer().getCurrentAudioFile() != null &&
+                                    user2.getPlayer().getCurrentAudioFile().matchesOwner(username)) {
+                                return username + " can't be deleted.";
+                            }
+                        }
+                        users.remove(user);
+                        return username + " was successfully deleted.";
+                    }
                 }
             }
         }

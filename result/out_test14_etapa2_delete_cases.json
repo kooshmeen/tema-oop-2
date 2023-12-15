@@ -186,7 +186,7 @@
   "user" : "sonicpainter"
 }, {
   "command" : "deleteUser",
-  "message" : "audiosage can't be deleted.",
+  "message" : "audiosage was successfully deleted.",
   "timestamp" : 930,
   "user" : "audiosage"
 }, {
@@ -206,7 +206,7 @@
   "user" : "sonicpainter"
 }, {
   "command" : "deleteUser",
-  "message" : "audiosage can't be deleted.",
+  "message" : "The username audiosage doesn't exist.",
   "timestamp" : 1100,
   "user" : "audiosage"
 }, {
@@ -221,7 +221,7 @@
   "user" : "melodicwanderer"
 }, {
   "command" : "deleteUser",
-  "message" : "musicmaven can't be deleted.",
+  "message" : "musicmaven was successfully deleted.",
   "timestamp" : 6900,
   "user" : "musicmaven"
 }, {
@@ -246,17 +246,17 @@
   "user" : "melodicwanderer"
 }, {
   "command" : "deleteUser",
-  "message" : "sonicpainter can't be deleted.",
+  "message" : "sonicpainter was successfully deleted.",
   "timestamp" : 7860,
   "user" : "sonicpainter"
 }, {
   "command" : "deleteUser",
-  "message" : "sonicpainter can't be deleted.",
+  "message" : "The username sonicpainter doesn't exist.",
   "timestamp" : 7890,
   "user" : "sonicpainter"
 }, {
   "command" : "printCurrentPage",
   "user" : "bob35",
   "timestamp" : 7900,
-  "message" : "Liked songs:\n\t[Aurora Harmony]\n\nFollowed playlists:\n\t[Playlist bengos]"
+  "message" : "Liked songs:\n\t[]\n\nFollowed playlists:\n\t[Playlist bengos]"
 } ]

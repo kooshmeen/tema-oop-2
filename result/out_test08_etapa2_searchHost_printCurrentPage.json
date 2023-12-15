@@ -286,7 +286,7 @@
   } ]
 }, {
   "command" : "deleteUser",
-  "message" : "soundseeker can't be deleted.",
+  "message" : "soundseeker was successfully deleted.",
   "timestamp" : 4010,
   "user" : "soundseeker"
 }, {
@@ -302,7 +302,7 @@
   }
 }, {
   "command" : "deleteUser",
-  "message" : "soundseeker can't be deleted.",
+  "message" : "The username soundseeker doesn't exist.",
   "timestamp" : 100000,
   "user" : "soundseeker"
 } ]
