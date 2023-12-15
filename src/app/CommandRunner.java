@@ -741,4 +741,14 @@ public final class CommandRunner {
 
         return objectNode;
     }
+    public static ObjectNode getTop5Albums(final CommandInput commandInput) {
+        ArrayList<String> albums = Admin.getTop5Albums();
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("result", objectMapper.valueToTree(albums));
+        objectNode.put("timestamp", commandInput.getTimestamp());
+
+        return objectNode;
+    }
 }

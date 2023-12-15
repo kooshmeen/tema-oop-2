@@ -477,4 +477,18 @@ public final class Admin {
         }
         return "The username " + username + " doesn't exist.";
     }
+    public static ArrayList<String> getTop5Albums () {
+        ArrayList<Album> albums = getAlbums();
+        albums.sort(Comparator.comparingInt(Album::getLikes).reversed());
+        ArrayList<String> topAlbums = new ArrayList<>();
+        int count = 0;
+        for (Album album : albums) {
+            if (count >= LIMIT) {
+                break;
+            }
+            topAlbums.add(album.getName());
+            count++;
+        }
+        return topAlbums;
+    }
 }

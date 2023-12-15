@@ -19,4 +19,11 @@ public class Album {
         this.songs = songs;
         this.owner = owner;
     }
+    public Integer getLikes() {
+        Integer likes = 0;
+        for (Song song : songs) {
+            likes += song.getLikes();
+        }
+        return likes;
+    }
 }

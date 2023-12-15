@@ -96,7 +96,11 @@ Starting audit...
 [ERROR] /home/cosmin/Desktop/Facultate/poo/tema-oop-2/./src/app/Admin.java:456:40: '(' is preceded with whitespace. [MethodParamPad]
 [ERROR] /home/cosmin/Desktop/Facultate/poo/tema-oop-2/./src/app/Admin.java:468:5: Missing a Javadoc comment. [MissingJavadocMethod]
 [ERROR] /home/cosmin/Desktop/Facultate/poo/tema-oop-2/./src/app/Admin.java:468:38: '(' is preceded with whitespace. [MethodParamPad]
+[ERROR] /home/cosmin/Desktop/Facultate/poo/tema-oop-2/./src/app/Admin.java:480:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] /home/cosmin/Desktop/Facultate/poo/tema-oop-2/./src/app/Admin.java:480:51: '(' is preceded with whitespace. [MethodParamPad]
 [ERROR] /home/cosmin/Desktop/Facultate/poo/tema-oop-2/./src/app/audio/Collections/Album.java:3:8: Unused import - fileio.input.SongInput. [UnusedImports]
+[ERROR] /home/cosmin/Desktop/Facultate/poo/tema-oop-2/./src/app/audio/Collections/Album.java:22:5: Class 'Album' looks like designed for extension (can be subclassed), but the method 'getLikes' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'Album' final or making the method 'getLikes' static/final/abstract/empty, or adding allowed annotation for the method. [DesignForExtension]
+[ERROR] /home/cosmin/Desktop/Facultate/poo/tema-oop-2/./src/app/audio/Collections/Album.java:22:5: Missing a Javadoc comment. [MissingJavadocMethod]
 [ERROR] /home/cosmin/Desktop/Facultate/poo/tema-oop-2/./src/app/audio/Collections/Playlist.java:139:5: Missing a Javadoc comment. [MissingJavadocMethod]
 [ERROR] /home/cosmin/Desktop/Facultate/poo/tema-oop-2/./src/app/audio/Collections/AlbumOutput.java:1: File does not end with a newline. [NewlineAtEndOfFile]
 [ERROR] /home/cosmin/Desktop/Facultate/poo/tema-oop-2/./src/app/audio/Collections/AlbumOutput.java:12:24: Parameter name should be final. [FinalParameters]
@@ -199,5 +203,6 @@ Starting audit...
 [ERROR] /home/cosmin/Desktop/Facultate/poo/tema-oop-2/./src/app/CommandRunner.java:709:5: Missing a Javadoc comment. [MissingJavadocMethod]
 [ERROR] /home/cosmin/Desktop/Facultate/poo/tema-oop-2/./src/app/CommandRunner.java:722:5: Missing a Javadoc comment. [MissingJavadocMethod]
 [ERROR] /home/cosmin/Desktop/Facultate/poo/tema-oop-2/./src/app/CommandRunner.java:733:5: Missing a Javadoc comment. [MissingJavadocMethod]
+[ERROR] /home/cosmin/Desktop/Facultate/poo/tema-oop-2/./src/app/CommandRunner.java:744:5: Missing a Javadoc comment. [MissingJavadocMethod]
 Audit done.
-Checkstyle ends with 200 errors.
+Checkstyle ends with 205 errors.
