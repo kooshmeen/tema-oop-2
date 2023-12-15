@@ -236,7 +236,7 @@
   "user" : "sonicpainter"
 }, {
   "command" : "removePodcast",
-  "message" : "musicmaven deleted the podcast successfully.",
+  "message" : "musicmaven can't delete this podcast.",
   "timestamp" : 980,
   "user" : "musicmaven"
 }, {

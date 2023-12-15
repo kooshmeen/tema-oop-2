@@ -232,7 +232,7 @@
   "message" : "Skipped forward successfully."
 }, {
   "command" : "removePodcast",
-  "message" : "soundseeker deleted the podcast successfully.",
+  "message" : "soundseeker can't delete this podcast.",
   "timestamp" : 1050,
   "user" : "soundseeker"
 }, {
