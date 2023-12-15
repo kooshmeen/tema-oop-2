@@ -7,9 +7,9 @@ import java.util.Date;
 
 @Getter
 public class Event {
-    private String name;
-    private DateInput date;
-    private String description;
+    private final String name;
+    private final DateInput date;
+    private final String description;
     public Event(String name, DateInput date, String description) {
         this.name = name;
         this.date = date;

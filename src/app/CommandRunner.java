@@ -3,6 +3,8 @@ package app;
 import app.audio.Collections.Album;
 import app.audio.Collections.AlbumOutput;
 import app.audio.Collections.PlaylistOutput;
+import app.audio.Collections.Podcast;
+import app.audio.Files.Episode;
 import app.audio.Files.Song;
 import app.player.PlayerStats;
 import app.searchBar.Filters;
@@ -11,6 +13,7 @@ import app.user.User;
 import app.utils.Enums;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.CommandInput;
 
@@ -629,6 +632,64 @@ public final class CommandRunner {
         ObjectNode objectNode = objectMapper.createObjectNode();
         objectNode.put("command", commandInput.getCommand());
         objectNode.put("message", objectMapper.valueToTree(message));
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("user", commandInput.getUsername());
+
+        return objectNode;
+    }
+    public static ObjectNode addPodcast(final CommandInput commandInput) {
+        String message = Admin.addPodcast(commandInput.getUsername(), commandInput.getName(),
+                commandInput.getEpisodes());
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("message", objectMapper.valueToTree(message));
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("user", commandInput.getUsername());
+
+        return objectNode;
+    }
+    public static ObjectNode addAnnouncement(final CommandInput commandInput) {
+        String message = Admin.addAnnouncement(commandInput.getUsername(), commandInput.getName(),
+                commandInput.getDescription());
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("message", objectMapper.valueToTree(message));
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("user", commandInput.getUsername());
+
+        return objectNode;
+    }
+    public static ObjectNode removeAnnouncement(final CommandInput commandInput) {
+        String message = Admin.removeAnnouncement(commandInput.getUsername(), commandInput.getName());
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("message", objectMapper.valueToTree(message));
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("user", commandInput.getUsername());
+
+        return objectNode;
+    }
+    public static ObjectNode showPodcasts(final CommandInput commandInput) {
+        // gpt
+        ArrayList<Podcast> podcasts = Admin.showPodcasts(commandInput.getUsername());
+        ArrayNode podcastArray = objectMapper.createArrayNode();
+        for (Podcast podcast : podcasts) {
+            ObjectNode podcastNode = objectMapper.createObjectNode();
+            podcastNode.put("name", podcast.getName());
+            ArrayNode episodesArray = objectMapper.createArrayNode();
+            for (Episode episode : podcast.getEpisodes()) {
+                episodesArray.add(episode.getName());
+            }
+            podcastNode.set("episodes", episodesArray);
+            podcastArray.add(podcastNode);
+        }
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("result", podcastArray);
         objectNode.put("timestamp", commandInput.getTimestamp());
         objectNode.put("user", commandInput.getUsername());
 

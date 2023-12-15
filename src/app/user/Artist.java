@@ -46,6 +46,7 @@ public class Artist extends User {
                 return getUsername() + " has another album with the same name.";
             }
         }
+        // gpt
         HashSet<String> uniqueSongs = new HashSet<>();
         for (Song song : album.getSongs()) {
             if (!uniqueSongs.add(song.getName())) {

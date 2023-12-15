@@ -28,6 +28,7 @@ public final class CommandInput {
     private DateInput date;
     @Getter
     private Integer price;
+    @Getter
     private ArrayList<EpisodeInput> episodes;
     private String nextPage;
 

@@ -42,8 +42,9 @@ public class User {
     private final Player player;
     private final SearchBar searchBar;
     private boolean lastSearched;
-    private boolean lastSearchedArtist;
-    private boolean lastSearchedAlbum;
+    private boolean lastSearchedArtist; // if last searched was an artist
+    private boolean lastSearchedAlbum; // if last searched was an album
+    private boolean lastSearchedHost; // if last searched was a host
     @Getter
     private boolean connectionOnline;
     private enum PageType {
@@ -61,8 +62,11 @@ public class User {
     private Artist selectedArtist = null;
     private List<Artist> lastSearchedArtists;
     private List<Album> lastSearchedAlbums;
+    private List<Host> lastSearchedHosts;
     @Getter
     private Album selectedAlbum = null;
+    @Getter
+    private Host selectedHost = null;
 
     /**
      * Instantiates a new User.
@@ -89,6 +93,7 @@ public class User {
         currentPage = PageType.HOME_PAGE;
         lastSearchedArtist = false;
         lastSearchedAlbum = false;
+        lastSearchedHost = false;
         lastSearchedArtists = new ArrayList<>();
         lastSearchedAlbums = new ArrayList<>();
     }
@@ -135,7 +140,8 @@ public class User {
                     }
                 }
             } else {
-                results = null;
+                lastSearched = true;
+                lastSearchedHost = true;
             }
             return results;
         } else if (type.equals("album")){ // search album
@@ -163,7 +169,24 @@ public class User {
             }
             return results;
         } else {
-            return null;
+            lastSearchedHosts = new ArrayList<>();
+            searchBar.clearSelection();
+            player.stop();
+            ArrayList<String> results = new ArrayList<>();
+            if (connectionOnline) {
+                lastSearched = true;
+                lastSearchedHost = true;
+                results = new ArrayList<>();
+                for (Host host : Admin.getHosts()) {
+                    if (host.getUsername().startsWith(filters.getName())) {
+                        results.add(host.getUsername());
+                        lastSearchedHosts.add(host);
+                    }
+                }
+            } else {
+                results = null;
+            }
+            return results;
         }
     }
 
@@ -196,6 +219,15 @@ public class User {
             Album album = lastSearchedAlbums.get(itemNumber - 1);
             selectedAlbum = album;
             return "Successfully selected %s".formatted(album.getName() + ".");
+        } else if (lastSearchedHost) {
+            lastSearchedHost = false;
+            if (itemNumber > lastSearchedHosts.size()) {
+                return "The selected ID is too high.";
+            }
+            Host host = lastSearchedHosts.get(itemNumber - 1);
+            selectedHost = host;
+            currentPage = PageType.HOST_PAGE;
+            return "Successfully selected %s".formatted(host.getUsername() + "'s page.");
         } else {
             LibraryEntry selected = searchBar.select(itemNumber);
 
