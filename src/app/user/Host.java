@@ -1,5 +1,6 @@
 package app.user;
 
+import app.Admin;
 import app.EventMerch.Announcement;
 import app.audio.Collections.Podcast;
 import app.audio.Files.Episode;
@@ -73,6 +74,12 @@ public class Host extends User{
         }
         for (Podcast podcast : podcasts) {
             if (podcast.getName().equals(podcastName)) {
+                for (User user : Admin.getUsers()) {
+                    if (user.getPlayer().getSource() != null &&
+                            user.getPlayer().getSource().getAudioCollection().getName().equals(podcastName)) {
+                        return getUsername() + " can't delete this podcast.";
+                    }
+                }
                 podcasts.remove(podcast);
                 return getUsername() + " deleted the podcast successfully.";
             }
