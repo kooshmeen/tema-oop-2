@@ -730,4 +730,15 @@ public final class CommandRunner {
 
         return objectNode;
     }
+    public static ObjectNode removeEvent(final CommandInput commandInput) {
+        String message = Admin.removeEvent(commandInput.getUsername(), commandInput.getName());
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("message", objectMapper.valueToTree(message));
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("user", commandInput.getUsername());
+
+        return objectNode;
+    }
 }

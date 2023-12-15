@@ -4,6 +4,7 @@ import app.Admin;
 import app.EventMerch.Event;
 import app.EventMerch.Merch;
 import app.audio.Collections.Album;
+import app.audio.Collections.Playlist;
 import app.audio.Files.Song;
 import fileio.input.DateInput;
 import fileio.input.SongInput;
@@ -70,7 +71,7 @@ public class Artist extends User {
         int month = date.getMonth();
         int year = date.getYear();
         if (day < 1 || day > 31 || month < 1 || month > 12 || year < 0 || (month == 2 && day > 28)) {
-            return "Event for " + getUsername() + " does not have a valid date";
+            return "Event for " + getUsername() + " does not have a valid date.";
         }
         events.add(new Event(eventName, date, description));
         return getUsername() + " has added new event successfully.";
@@ -101,6 +102,17 @@ public class Artist extends User {
                             user.getSelectedAlbum().getName().equals(albumName)) {
                         return username + " can't delete this album.";
                     }
+                    if (user.getPlayer().getCurrentAudioFile() != null &&
+                            user.getPlayer().getCurrentAudioFile().getName().equals(albumName)) {
+                        return username + " can't delete this album.";
+                    }
+                    for (Playlist playlist : user.getPlaylists()) {
+                        for (Song song : playlist.getSongs()) {
+                            if (song.getAlbum().equals(albumName)) {
+                                return username + " can't delete this album.";
+                            }
+                        }
+                    }
                     if (user.getSelectedAlbum() != null) {
                         return user.getUsername() + " has this album selected." + user.getSelectedAlbum().getName();
                     }
@@ -110,5 +122,17 @@ public class Artist extends User {
             }
         }
         return username + " doesn't have an album with the given name.";
+    }
+    public String removeEvent(final String username, final String eventName) {
+        if (events == null) {
+            return username + " doesn't have an event with the given name.";
+        }
+        for (Event event : events) {
+            if (event.getName().equals(eventName)) {
+                events.remove(event);
+                return username + " deleted the event successfully.";
+            }
+        }
+        return username + " doesn't have an event with the given name.";
     }
 }

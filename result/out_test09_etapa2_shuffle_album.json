@@ -116,7 +116,7 @@
 }, {
   "command" : "addEvent",
   "timestamp" : 395,
-  "message" : "Event for melodymaster does not have a valid date",
+  "message" : "Event for melodymaster does not have a valid date.",
   "user" : "melodymaster"
 }, {
   "command" : "load",
@@ -250,6 +250,11 @@
   "timestamp" : 2435,
   "message" : "Successfully selected My playlist."
 }, {
+  "command" : "removeEvent",
+  "message" : "melodymaster deleted the event successfully.",
+  "timestamp" : 2440,
+  "user" : "melodymaster"
+}, {
   "command" : "search",
   "user" : "bob35",
   "timestamp" : 2445,
@@ -367,7 +372,7 @@
   }
 }, {
   "command" : "removeAlbum",
-  "message" : "melodymaster deleted the album successfully.",
+  "message" : "melodymaster can't delete this album.",
   "timestamp" : 3000,
   "user" : "melodymaster"
 }, {
@@ -417,7 +422,7 @@
   "command" : "printCurrentPage",
   "user" : "david27",
   "timestamp" : 3900,
-  "message" : "Albums:\n\t[]\n\nMerch:\n\t[Merch1 - 100:\n\tPrimul Merch adaugat!]\n\nEvents:\n\t[Event1 - 01-01-2022:\n\tPrimul Event adaugat!, Event2 - 05-02-2021:\n\tAl doilea Event adaugat!]"
+  "message" : "Albums:\n\t[Harmonic Horizons]\n\nMerch:\n\t[Merch1 - 100:\n\tPrimul Merch adaugat!]\n\nEvents:\n\t[Event2 - 05-02-2021:\n\tAl doilea Event adaugat!]"
 }, {
   "command" : "status",
   "user" : "bob35",
@@ -465,7 +470,7 @@
   "command" : "printCurrentPage",
   "user" : "david27",
   "timestamp" : 4400,
-  "message" : "Albums:\n\t[]\n\nMerch:\n\t[Merch1 - 100:\n\tPrimul Merch adaugat!]\n\nEvents:\n\t[Event1 - 01-01-2022:\n\tPrimul Event adaugat!, Event2 - 05-02-2021:\n\tAl doilea Event adaugat!]"
+  "message" : "Albums:\n\t[Harmonic Horizons]\n\nMerch:\n\t[Merch1 - 100:\n\tPrimul Merch adaugat!]\n\nEvents:\n\t[Event2 - 05-02-2021:\n\tAl doilea Event adaugat!]"
 }, {
   "command" : "status",
   "user" : "bob35",

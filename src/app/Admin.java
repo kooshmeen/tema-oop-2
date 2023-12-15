@@ -465,4 +465,16 @@ public final class Admin {
         }
         return "The username " + username + " doesn't exist.";
     }
+    public static String removeEvent (final String username, final String eventName) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                if (user instanceof Artist artist) {
+                    return artist.removeEvent(username, eventName);
+                } else {
+                    return username + " is not an artist.";
+                }
+            }
+        }
+        return "The username " + username + " doesn't exist.";
+    }
 }
