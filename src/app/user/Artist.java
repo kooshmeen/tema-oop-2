@@ -37,13 +37,13 @@ public class Artist extends User {
             }
         }
         HashSet<String> uniqueSongs = new HashSet<>();
-        for (SongInput song : album.getSongs()) {
+        for (Song song : album.getSongs()) {
             if (!uniqueSongs.add(song.getName())) {
                 return getUsername() + " has the same song at least twice in this album.";
             }
         }
         albums.add(album);
-        Admin.addSongs(album.getSongsAsSongs());
+        Admin.addSongs(album.getSongs());
         return getUsername() + " has added new album successfully.";
     }
 }

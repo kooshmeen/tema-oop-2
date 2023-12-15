@@ -1,29 +1,74 @@
 [ {
+  "command" : "addUser",
+  "message" : "The username sonicpainter has been added successfully.",
+  "timestamp" : 45,
+  "user" : "sonicpainter"
+}, {
+  "command" : "addUser",
+  "message" : "The username echoexplorer has been added successfully.",
+  "timestamp" : 50,
+  "user" : "echoexplorer"
+}, {
+  "command" : "addUser",
+  "message" : "The username rhythmweaver has been added successfully.",
+  "timestamp" : 55,
+  "user" : "rhythmweaver"
+}, {
+  "command" : "addUser",
+  "message" : "The username soundseeker21 has been added successfully.",
+  "timestamp" : 60,
+  "user" : "soundseeker21"
+}, {
+  "command" : "addUser",
+  "message" : "The username melodicwanderer has been added successfully.",
+  "timestamp" : 65,
+  "user" : "melodicwanderer"
+}, {
+  "command" : "addUser",
+  "message" : "The username audiosage has been added successfully.",
+  "timestamp" : 70,
+  "user" : "audiosage"
+}, {
+  "command" : "addUser",
+  "message" : "The username soundcurator has been added successfully.",
+  "timestamp" : 75,
+  "user" : "soundcurator"
+}, {
+  "command" : "addUser",
+  "message" : "The username musicmaven has been added successfully.",
+  "timestamp" : 80,
+  "user" : "musicmaven"
+}, {
   "command" : "createPlaylist",
   "user" : "melodicwanderer",
   "timestamp" : 305,
-  "message" : "Create playlist failed: User melodicwanderer not found"
+  "message" : "Playlist created successfully."
+}, {
+  "command" : "addAlbum",
+  "timestamp" : 310,
+  "message" : "sonicpainter has added new album successfully.",
+  "user" : "sonicpainter"
 }, {
   "command" : "search",
   "user" : "melodicwanderer",
   "timestamp" : 315,
-  "message" : "Search returned 0 results",
-  "results" : null
+  "message" : "Search returned 2 results",
+  "results" : [ "Aurora Harmony", "Azure Echoes" ]
 }, {
   "command" : "select",
   "user" : "melodicwanderer",
   "timestamp" : 320,
-  "message" : "Select failed: User melodicwanderer not found"
+  "message" : "Successfully selected Azure Echoes."
 }, {
   "command" : "load",
   "user" : "melodicwanderer",
   "timestamp" : 325,
-  "message" : "Load failed: User melodicwanderer not found"
+  "message" : "Playback loaded successfully."
 }, {
   "command" : "addRemoveInPlaylist",
   "user" : "melodicwanderer",
   "timestamp" : 330,
-  "message" : "Add/Remove failed: User melodicwanderer not found"
+  "message" : "Successfully added to playlist."
 }, {
   "command" : "search",
   "user" : "alice22",
@@ -44,76 +89,81 @@
   "command" : "search",
   "user" : "bob35",
   "timestamp" : 350,
-  "message" : "Search returned 0 results",
-  "results" : [ ]
+  "message" : "Search returned 1 results",
+  "results" : [ "Playlist bengos" ]
 }, {
   "command" : "select",
   "user" : "bob35",
   "timestamp" : 355,
-  "message" : "The selected ID is too high."
+  "message" : "Successfully selected Playlist bengos."
 }, {
   "command" : "follow",
   "user" : "bob35",
   "timestamp" : 360,
-  "message" : "Please select a source before following or unfollowing."
+  "message" : "Playlist followed successfully."
 }, {
   "command" : "search",
   "user" : "bob35",
   "timestamp" : 365,
-  "message" : "Search returned 0 results",
-  "results" : [ ]
+  "message" : "Search returned 1 results",
+  "results" : [ "Aurora Harmony" ]
 }, {
   "command" : "select",
   "user" : "bob35",
   "timestamp" : 370,
-  "message" : "The selected ID is too high."
+  "message" : "Successfully selected Aurora Harmony."
 }, {
   "command" : "load",
   "user" : "bob35",
   "timestamp" : 375,
-  "message" : "Please select a source before attempting to load."
+  "message" : "Playback loaded successfully."
 }, {
   "command" : "like",
   "user" : "bob35",
   "timestamp" : 380,
-  "message" : "Please load a source before liking or unliking."
+  "message" : "Like registered successfully."
 }, {
   "command" : "repeat",
   "user" : "melodicwanderer",
   "timestamp" : 480,
-  "message" : "Repeat failed: User melodicwanderer not found"
+  "message" : "Repeat mode changed to repeat once."
+}, {
+  "command" : "printCurrentPage",
+  "user" : "bob35",
+  "timestamp" : 525,
+  "message" : "Liked songs:\n\t[Aurora Harmony]\n\nFollowed playlists:\n\t[Playlist bengos]"
 }, {
   "command" : "search",
   "user" : "soundseeker21",
   "timestamp" : 625,
   "message" : "Search returned 0 results",
-  "results" : null
+  "results" : [ ]
 }, {
   "command" : "select",
   "user" : "soundseeker21",
   "timestamp" : 630,
-  "message" : "Select failed: User soundseeker21 not found"
+  "message" : "The selected ID is too high."
 }, {
   "command" : "search",
   "user" : "carol19",
   "timestamp" : 725,
-  "message" : "Search returned 0 results",
-  "results" : [ ]
+  "message" : "Search returned 1 results",
+  "results" : [ "Playlist bengos" ]
 }, {
   "command" : "select",
   "user" : "carol19",
   "timestamp" : 730,
-  "message" : "The selected ID is too high."
+  "message" : "Successfully selected Playlist bengos."
 }, {
   "command" : "follow",
   "user" : "carol19",
   "timestamp" : 735,
-  "message" : "Please select a source before following or unfollowing."
+  "message" : "Playlist followed successfully."
 }, {
   "command" : "load",
   "user" : "carol19",
   "timestamp" : 740,
-  "message" : "Please select a source before attempting to load."
+  "message" : "Playback loaded successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -124,7 +174,7 @@
   "command" : "repeat",
   "user" : "carol19",
   "timestamp" : 965,
-  "message" : "Please load a source before setting the repeat status."
+  "message" : "Repeat mode changed to repeat all."
 }, {
   "command" : "select",
   "user" : "david27",
@@ -134,10 +184,15 @@
   "command" : "repeat",
   "user" : "carol19",
   "timestamp" : 7200,
-  "message" : "Please load a source before setting the repeat status."
+  "message" : "Repeat mode changed to repeat current song."
 }, {
   "command" : "repeat",
   "user" : "carol19",
   "timestamp" : 7505,
-  "message" : "Please load a source before setting the repeat status."
+  "message" : "Repeat mode changed to no repeat."
+}, {
+  "command" : "printCurrentPage",
+  "user" : "bob35",
+  "timestamp" : 7900,
+  "message" : "Liked songs:\n\t[Aurora Harmony]\n\nFollowed playlists:\n\t[Playlist bengos]"
 } ]

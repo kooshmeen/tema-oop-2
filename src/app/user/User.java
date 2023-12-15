@@ -6,6 +6,8 @@ import app.audio.Collections.PlaylistOutput;
 import app.audio.Files.AudioFile;
 import app.audio.Files.Song;
 import app.audio.LibraryEntry;
+import app.pages.HomePage;
+import app.pages.LikedContentPage;
 import app.player.Player;
 import app.player.PlayerStats;
 import app.searchBar.Filters;
@@ -37,6 +39,13 @@ public class User {
     private boolean lastSearched;
     @Getter
     private boolean connectionOnline;
+    private enum PageType {
+        HOME_PAGE,
+        LIKED_CONTENT_PAGE
+    }
+    private PageType currentPage;
+    private final HomePage homePage;
+    private final LikedContentPage likedContentPage;
 
     /**
      * Instantiates a new User.
@@ -56,6 +65,9 @@ public class User {
         searchBar = new SearchBar(username);
         lastSearched = false;
         connectionOnline = true;
+        homePage = new HomePage(this);
+        likedContentPage = new LikedContentPage(this);
+        currentPage = PageType.HOME_PAGE;
     }
 
     /**
@@ -489,6 +501,13 @@ public class User {
             player.switchOffline();
         }
         return username + " has changed status successfully.";
+    }
+    public String printCurrentPage() {
+        if (currentPage == PageType.HOME_PAGE) {
+            return homePage.displayContent();
+        } else {
+            return likedContentPage.displayContent();
+        }
     }
 
     /**

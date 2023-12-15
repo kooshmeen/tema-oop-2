@@ -1,7 +1,34 @@
 [ {
+  "command" : "addUser",
+  "message" : "The username melodymaster has been added successfully.",
+  "timestamp" : 5,
+  "user" : "melodymaster"
+}, {
+  "command" : "addUser",
+  "message" : "The username rhythmrider has been added successfully.",
+  "timestamp" : 10,
+  "user" : "rhythmrider"
+}, {
+  "command" : "addUser",
+  "message" : "The username beatblazer has been added successfully.",
+  "timestamp" : 15,
+  "user" : "beatblazer"
+}, {
+  "command" : "addUser",
+  "message" : "The username harmonichero has been added successfully.",
+  "timestamp" : 20,
+  "user" : "harmonichero"
+}, {
   "command" : "getOnlineUsers",
-  "result" : [ "alice22", "bob35", "carol19", "david27", "emily30", "frank21", "grace25", "henry26", "irene33", "jack29" ],
+  "result" : [ "alice22", "bob35", "carol19", "david27", "emily30", "frank21", "grace25", "henry26", "irene33", "jack29", "melodymaster", "rhythmrider", "beatblazer", "harmonichero" ],
   "timestamp" : 25
+}, {
+  "command" : "addAlbum",
+  "timestamp" : 35,
+  "message" : "melodymaster has added new album successfully.",
+  "user" : "melodymaster"
+}, {
+  "message" : "The username beatblazer doesn't exist."
 }, {
   "command" : "search",
   "user" : "alice22",
@@ -13,6 +40,11 @@
   "user" : "alice22",
   "timestamp" : 70,
   "message" : "The selected ID is too high."
+}, {
+  "command" : "printCurrentPage",
+  "user" : "alice22",
+  "timestamp" : 75,
+  "message" : "Liked songs:\n\t[]\n\nFollowed playlists:\n\t[]"
 }, {
   "command" : "switchConnectionStatus",
   "timestamp" : 87,
@@ -35,4 +67,14 @@
   "user" : "bob35",
   "timestamp" : 110,
   "message" : "The selected ID is too high."
+}, {
+  "command" : "printCurrentPage",
+  "user" : "alice22",
+  "timestamp" : 115,
+  "message" : "Liked songs:\n\t[]\n\nFollowed playlists:\n\t[]"
+}, {
+  "command" : "printCurrentPage",
+  "user" : "bob35",
+  "timestamp" : 120,
+  "message" : "Liked songs:\n\t[]\n\nFollowed playlists:\n\t[]"
 } ]

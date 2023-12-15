@@ -227,7 +227,13 @@ public final class Admin {
         for (User user : users) {
             if (user.getUsername().equals(username)) {
                 if (user instanceof Artist artist) {
-                    Album album = new Album(albumName, releaseYear, description, songs);
+                    ArrayList<Song> newSongs = new ArrayList<>();
+                    for (SongInput songInput : songs) {
+                        newSongs.add(new Song(songInput.getName(), songInput.getDuration(), songInput.getAlbum(),
+                                songInput.getTags(), songInput.getLyrics(), songInput.getGenre(),
+                                songInput.getReleaseYear(), songInput.getArtist()));
+                    }
+                    Album album = new Album(albumName, releaseYear, description, newSongs);
                     return artist.addAlbum(album);
                 } else {
                     return username + " is not an artist.";

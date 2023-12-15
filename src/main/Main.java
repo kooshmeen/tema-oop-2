@@ -116,6 +116,7 @@ public final class Main {
                 case "addUser" -> outputs.add(CommandRunner.addUser(command));
                 case "addAlbum" -> outputs.add(CommandRunner.addAlbum(command));
                 case "showAlbums" -> outputs.add(CommandRunner.showAlbums(command));
+                case "printCurrentPage" -> outputs.add(CommandRunner.printCurrentPage(command));
                 default -> System.out.println("Invalid command " + commandName);
             }
         }

@@ -545,7 +545,7 @@ public final class CommandRunner {
             ArrayList<AlbumOutput> albumOutputs = new ArrayList<>();
             for (Album album : artist.getAlbums()) {
                 ArrayList<String> songNames = new ArrayList<>();
-                for (Song song : album.getSongsAsSongs()) {
+                for (Song song : album.getSongs()) {
                     songNames.add(song.getName());
                 }
                 albumOutputs.add(new AlbumOutput(album.getName(), songNames));
@@ -564,5 +564,18 @@ public final class CommandRunner {
 
             return objectNode;
         }
+    }
+    public static ObjectNode printCurrentPage(final CommandInput commandInput) {
+        User user = Admin.getUser(commandInput.getUsername());
+        assert user != null;
+        String message = user.printCurrentPage();
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("user", commandInput.getUsername());
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("message", message);
+
+        return objectNode;
     }
 }
