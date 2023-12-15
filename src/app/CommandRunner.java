@@ -9,11 +9,10 @@ import app.searchBar.Filters;
 import app.user.Artist;
 import app.user.User;
 import app.utils.Enums;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.CommandInput;
-import fileio.input.SongInput;
-import picocli.CommandLine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public final class CommandRunner {
     /**
      * The Object mapper.
      */
-    private static ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     private CommandRunner() {
     }
@@ -41,7 +40,7 @@ public final class CommandRunner {
         Filters filters = new Filters(commandInput.getFilters());
         String type = commandInput.getType();
         ArrayList<String> results = new ArrayList<>();
-        String message = new String();
+        String message;
         if (user == null) {
             results = null;
             message = "Search returned 0 results";
@@ -71,7 +70,7 @@ public final class CommandRunner {
     public static ObjectNode select(final CommandInput commandInput) {
         User user = Admin.getUser(commandInput.getUsername());
 
-        String message = null;
+        String message;
         if (user != null) {
             message = user.select(commandInput.getItemNumber());
         } else {
@@ -95,7 +94,7 @@ public final class CommandRunner {
      */
     public static ObjectNode load(final CommandInput commandInput) {
         User user = Admin.getUser(commandInput.getUsername());
-        String message = null;
+        String message;
         if (user != null) {
             message = user.load();
         } else {
@@ -557,6 +556,14 @@ public final class CommandRunner {
             objectNode.put("user", commandInput.getUsername());
 
             return objectNode;
+        } else if (artist != null) {
+            ObjectNode objectNode = objectMapper.createObjectNode();
+            objectNode.put("command", commandInput.getCommand());
+            objectNode.put("timestamp", commandInput.getTimestamp());
+            objectNode.put("result", objectMapper.valueToTree(new ArrayList<>()));
+            objectNode.put("user", commandInput.getUsername());
+
+            return objectNode;
         } else {
             String message = "The username " + commandInput.getUsername() + " doesn't exist.";
             ObjectNode objectNode = objectMapper.createObjectNode();
@@ -575,6 +582,30 @@ public final class CommandRunner {
         objectNode.put("user", commandInput.getUsername());
         objectNode.put("timestamp", commandInput.getTimestamp());
         objectNode.put("message", message);
+
+        return objectNode;
+    }
+    public static ObjectNode addEvent(final CommandInput commandInput) {
+        String message = Admin.addEvent(commandInput.getUsername(), commandInput.getName(),
+                commandInput.getDate(), commandInput.getDescription());
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("message", message);
+        objectNode.put("user", commandInput.getUsername());
+
+        return objectNode;
+    }
+    public static ObjectNode addMerch(final CommandInput commandInput) {
+        String message = Admin.addMerch(commandInput.getUsername(), commandInput.getName(),
+                commandInput.getDescription(), commandInput.getPrice());
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("message", message);
+        objectNode.put("user", commandInput.getUsername());
 
         return objectNode;
     }

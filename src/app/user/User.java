@@ -1,12 +1,15 @@
 package app.user;
 
+import app.Admin;
 import app.audio.Collections.AudioCollection;
 import app.audio.Collections.Playlist;
 import app.audio.Collections.PlaylistOutput;
 import app.audio.Files.AudioFile;
 import app.audio.Files.Song;
 import app.audio.LibraryEntry;
+import app.pages.ArtistPage;
 import app.pages.HomePage;
+import app.pages.HostPage;
 import app.pages.LikedContentPage;
 import app.player.Player;
 import app.player.PlayerStats;
@@ -37,15 +40,23 @@ public class User {
     private final Player player;
     private final SearchBar searchBar;
     private boolean lastSearched;
+    private boolean lastSearchedArtist;
     @Getter
     private boolean connectionOnline;
     private enum PageType {
         HOME_PAGE,
-        LIKED_CONTENT_PAGE
+        LIKED_CONTENT_PAGE,
+        ARTIST_PAGE,
+        HOST_PAGE
     }
     private PageType currentPage;
     private final HomePage homePage;
     private final LikedContentPage likedContentPage;
+    private final ArtistPage artistPage;
+    private final HostPage hostPage;
+    @Getter
+    private Artist selectedArtist = null;
+    private List<Artist> lastSearchedArtists;
 
     /**
      * Instantiates a new User.
@@ -67,7 +78,11 @@ public class User {
         connectionOnline = true;
         homePage = new HomePage(this);
         likedContentPage = new LikedContentPage(this);
+        artistPage = new ArtistPage(this);
+        hostPage = new HostPage(this);
         currentPage = PageType.HOME_PAGE;
+        lastSearchedArtist = false;
+        lastSearchedArtists = new ArrayList<>();
     }
 
     /**
@@ -78,21 +93,43 @@ public class User {
      * @return the array list
      */
     public ArrayList<String> search(final Filters filters, final String type) {
-        searchBar.clearSelection();
-        player.stop();
-        ArrayList<String> results = new ArrayList<>();
-        if (connectionOnline) {
-            lastSearched = true;
-            results = new ArrayList<>();
-            List<LibraryEntry> libraryEntries = searchBar.search(filters, type);
+        if (!type.equals("artist")) {
+            lastSearchedArtists = new ArrayList<>();
+            searchBar.clearSelection();
+            player.stop();
+            ArrayList<String> results;
+            if (connectionOnline) {
+                lastSearched = true;
+                results = new ArrayList<>();
+                List<LibraryEntry> libraryEntries = searchBar.search(filters, type);
 
-            for (LibraryEntry libraryEntry : libraryEntries) {
-                results.add(libraryEntry.getName());
+                for (LibraryEntry libraryEntry : libraryEntries) {
+                    results.add(libraryEntry.getName());
+                }
+            } else {
+                results = null;
             }
+            return results;
         } else {
-            results = null;
+            lastSearchedArtists = new ArrayList<>();
+            searchBar.clearSelection();
+            player.stop();
+            ArrayList<String> results = new ArrayList<>();
+            if (connectionOnline) {
+                lastSearched = true;
+                lastSearchedArtist = true;
+                results = new ArrayList<>();
+                for (Artist artist : Admin.getArtists()) {
+                    if (artist.getUsername().startsWith(filters.getName())) {
+                        results.add(artist.getUsername());
+                        lastSearchedArtists.add(artist);
+                    }
+                }
+            } else {
+                results = null;
+            }
+            return results;
         }
-        return results;
     }
 
     /**
@@ -107,14 +144,23 @@ public class User {
         }
 
         lastSearched = false;
+        if (lastSearchedArtist) {
+            lastSearchedArtist = false;
+            if (itemNumber > lastSearchedArtists.size()) {
+                return "The selected ID is too high.";
+            }
+            Artist artist = lastSearchedArtists.get(itemNumber - 1);
+            selectedArtist = artist;
+            currentPage = PageType.ARTIST_PAGE;
+            return "Successfully selected %s".formatted(artist.getUsername() + "'s page.");
+        } else {
+            LibraryEntry selected = searchBar.select(itemNumber);
 
-        LibraryEntry selected = searchBar.select(itemNumber);
-
-        if (selected == null) {
-            return "The selected ID is too high.";
+            if (selected == null) {
+                return "The selected ID is too high.";
+            }
+            return "Successfully selected %s.".formatted(selected.getName());
         }
-
-        return "Successfully selected %s.".formatted(selected.getName());
     }
 
     /**
@@ -503,10 +549,17 @@ public class User {
         return username + " has changed status successfully.";
     }
     public String printCurrentPage() {
+        if (!connectionOnline) {
+            return username + " is offline.";
+        }
         if (currentPage == PageType.HOME_PAGE) {
             return homePage.displayContent();
-        } else {
+        } else if (currentPage == PageType.LIKED_CONTENT_PAGE) {
             return likedContentPage.displayContent();
+        } else if (currentPage == PageType.ARTIST_PAGE) {
+            return artistPage.displayContent();
+        } else {
+            return hostPage.displayContent();
         }
     }
 

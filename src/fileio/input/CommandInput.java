@@ -24,7 +24,9 @@ public final class CommandInput {
     private String description;
     @Getter
     private ArrayList<SongInput> songs;
+    @Getter
     private DateInput date;
+    @Getter
     private Integer price;
     private ArrayList<EpisodeInput> episodes;
     private String nextPage;

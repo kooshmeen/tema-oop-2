@@ -1,15 +1,13 @@
 package app;
 
+import app.EventMerch.Merch;
 import app.audio.Collections.Album;
 import app.audio.Collections.Playlist;
 import app.audio.Collections.Podcast;
 import app.audio.Files.Episode;
 import app.audio.Files.Song;
 import app.user.*;
-import fileio.input.EpisodeInput;
-import fileio.input.PodcastInput;
-import fileio.input.SongInput;
-import fileio.input.UserInput;
+import fileio.input.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -24,8 +22,6 @@ public final class Admin {
     private static List<Podcast> podcasts = new ArrayList<>();
     private static int timestamp = 0;
     private static final int LIMIT = 5;
-    private static List<Artist> artists = new ArrayList<>();
-    private static List<Host> hosts = new ArrayList<>();
 
     private Admin() {
     }
@@ -192,7 +188,7 @@ public final class Admin {
     public static List<String> getOnlineUsers() {
         List<String> onlineUsers = new ArrayList<>();
         for (User user : users) {
-            if (user.isConnectionOnline()) {
+            if (user.isConnectionOnline() && !(user instanceof Host) && !(user instanceof Artist)) {
                 onlineUsers.add(user.getUsername());
             }
         }
@@ -248,5 +244,40 @@ public final class Admin {
                     song.getTags(), song.getLyrics(), song.getGenre(),
                     song.getReleaseYear(), song.getArtist()));
         }
+    }
+    public static String addEvent(final String username, final String eventName, final DateInput date,
+                                  final String description) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                if (user instanceof Artist artist) {
+                    return artist.addEvent(eventName, date, description);
+                } else {
+                    return username + " is not an artist.";
+                }
+            }
+        }
+        return "The username " + username + " doesn't exist.";
+    }
+    public static ArrayList<Artist> getArtists() {
+        ArrayList<Artist> artists = new ArrayList<>();
+        for (User user : users) {
+            if (user instanceof Artist artist) {
+                artists.add(artist);
+            }
+        }
+        return artists;
+    }
+    public static String addMerch(final String username, final String merchName,
+                                     final String description, final Integer price) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                if (user instanceof Artist artist) {
+                    return artist.addMerch(merchName, description, price);
+                } else {
+                    return username + " is not a host.";
+                }
+            }
+        }
+        return "The username " + username + " doesn't exist.";
     }
 }
