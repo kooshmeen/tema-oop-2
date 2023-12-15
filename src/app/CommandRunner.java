@@ -1,13 +1,19 @@
 package app;
 
+import app.audio.Collections.Album;
+import app.audio.Collections.AlbumOutput;
 import app.audio.Collections.PlaylistOutput;
+import app.audio.Files.Song;
 import app.player.PlayerStats;
 import app.searchBar.Filters;
+import app.user.Artist;
 import app.user.User;
 import app.utils.Enums;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.CommandInput;
+import fileio.input.SongInput;
+import picocli.CommandLine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -508,5 +514,55 @@ public final class CommandRunner {
         objectNode.put("timestamp", commandInput.getTimestamp());
 
         return objectNode;
+    }
+    public static ObjectNode addUser(final CommandInput commandInput) {
+        String message = Admin.addUser(commandInput.getUsername(), commandInput.getAge(),
+                commandInput.getCity(), commandInput.getType());
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("message", objectMapper.valueToTree(message));
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("user", commandInput.getUsername());
+
+        return objectNode;
+    }
+    public static ObjectNode addAlbum(final CommandInput commandInput) {
+        String message = Admin.addAlbum(commandInput.getUsername(), commandInput.getName(),
+                commandInput.getReleaseYear(), commandInput.getDescription(),
+                commandInput.getSongs());
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("message", message);
+        objectNode.put("user", commandInput.getUsername());
+
+        return objectNode;
+    }
+    public static ObjectNode showAlbums(final CommandInput commandInput) {
+        Artist artist = (Artist) Admin.getUser(commandInput.getUsername());
+        if (artist != null && artist.getAlbums() != null) {
+            ArrayList<AlbumOutput> albumOutputs = new ArrayList<>();
+            for (Album album : artist.getAlbums()) {
+                ArrayList<String> songNames = new ArrayList<>();
+                for (Song song : album.getSongsAsSongs()) {
+                    songNames.add(song.getName());
+                }
+                albumOutputs.add(new AlbumOutput(album.getName(), songNames));
+            }
+            ObjectNode objectNode = objectMapper.createObjectNode();
+            objectNode.put("command", commandInput.getCommand());
+            objectNode.put("timestamp", commandInput.getTimestamp());
+            objectNode.put("result", objectMapper.valueToTree(albumOutputs));
+            objectNode.put("user", commandInput.getUsername());
+
+            return objectNode;
+        } else {
+            String message = "The username " + commandInput.getUsername() + " doesn't exist.";
+            ObjectNode objectNode = objectMapper.createObjectNode();
+            objectNode.put("message", message);
+
+            return objectNode;
+        }
     }
 }

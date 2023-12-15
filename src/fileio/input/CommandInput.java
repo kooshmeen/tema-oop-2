@@ -1,5 +1,7 @@
 package fileio.input;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 
 public final class CommandInput {
@@ -16,8 +18,11 @@ public final class CommandInput {
     private Integer age;
     private String city;
     private String name;
+    @Getter
     private Integer releaseYear;
+    @Getter
     private String description;
+    @Getter
     private ArrayList<SongInput> songs;
     private DateInput date;
     private Integer price;
@@ -106,19 +111,19 @@ public final class CommandInput {
     public void setSeed(final Integer seed) {
         this.seed = seed;
     }
-    public Integer getAge(final Integer age) {
+    public Integer getAge() {
         return age;
     }
     public void setAge(final Integer age) {
         this.age = age;
     }
-    public String getCity(final String city) {
+    public String getCity() {
         return city;
     }
     public void setCity(final String city) {
         this.city = city;
     }
-    public String getName(final String name) {
+    public String getName() {
         return name;
     }
     public void setName(final String name) {

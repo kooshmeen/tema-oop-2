@@ -110,8 +110,12 @@ public final class Main {
                 case "getPreferredGenre" -> outputs.add(CommandRunner.getPreferredGenre(command));
                 case "getTop5Songs" -> outputs.add(CommandRunner.getTop5Songs(command));
                 case "getTop5Playlists" -> outputs.add(CommandRunner.getTop5Playlists(command));
-                case "switchConnectionStatus" -> outputs.add(CommandRunner.switchConnectionStatus(command));
+                case "switchConnectionStatus" ->
+                        outputs.add(CommandRunner.switchConnectionStatus(command));
                 case "getOnlineUsers" -> outputs.add(CommandRunner.getOnlineUsers(command));
+                case "addUser" -> outputs.add(CommandRunner.addUser(command));
+                case "addAlbum" -> outputs.add(CommandRunner.addAlbum(command));
+                case "showAlbums" -> outputs.add(CommandRunner.showAlbums(command));
                 default -> System.out.println("Invalid command " + commandName);
             }
         }

@@ -260,7 +260,9 @@ public class User {
         }
 
         Song song = (Song) player.getCurrentAudioFile();
-
+        if (!connectionOnline) {
+            return username + " is offline.";
+        }
         if (likedSongs.contains(song)) {
             likedSongs.remove(song);
             song.dislike();

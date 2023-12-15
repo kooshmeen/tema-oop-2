@@ -1,10 +1,11 @@
 package app;
 
+import app.audio.Collections.Album;
 import app.audio.Collections.Playlist;
 import app.audio.Collections.Podcast;
 import app.audio.Files.Episode;
 import app.audio.Files.Song;
-import app.user.User;
+import app.user.*;
 import fileio.input.EpisodeInput;
 import fileio.input.PodcastInput;
 import fileio.input.SongInput;
@@ -23,6 +24,8 @@ public final class Admin {
     private static List<Podcast> podcasts = new ArrayList<>();
     private static int timestamp = 0;
     private static final int LIMIT = 5;
+    private static List<Artist> artists = new ArrayList<>();
+    private static List<Host> hosts = new ArrayList<>();
 
     private Admin() {
     }
@@ -194,5 +197,50 @@ public final class Admin {
             }
         }
         return onlineUsers;
+    }
+    public static String addUser(final String username, final int age, final String city, final String type) {
+        UserFactory factory;
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return "The username " + username + " is already taken.";
+            }
+        }
+        switch (type) {
+            case "user":
+                factory = new RegularUserFactory();
+                break;
+            case "artist":
+                factory = new ArtistUserFactory();
+                break;
+            case "host":
+                factory = new HostUserFactory();
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid user type: " + type);
+        }
+        User user = factory.createUser(username, age, city);
+        users.add(user);
+        return "The username " + username + " has been added successfully.";
+    }
+    public static String addAlbum(final String username, final String albumName, final int releaseYear,
+                                  final String description, final ArrayList<SongInput> songs) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                if (user instanceof Artist artist) {
+                    Album album = new Album(albumName, releaseYear, description, songs);
+                    return artist.addAlbum(album);
+                } else {
+                    return username + " is not an artist.";
+                }
+            }
+        }
+        return "The username " + username + " doesn't exist.";
+    }
+    public static void addSongs(final ArrayList<Song> newSongs) {
+        for (Song song : newSongs) {
+            songs.add(new Song(song.getName(), song.getDuration(), song.getAlbum(),
+                    song.getTags(), song.getLyrics(), song.getGenre(),
+                    song.getReleaseYear(), song.getArtist()));
+        }
     }
 }
