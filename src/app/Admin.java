@@ -356,6 +356,14 @@ public final class Admin {
         for (User user : users) {
             if (user.getUsername().equals(username)) {
                 if (!(user instanceof Host) && !(user instanceof Artist)) { // regular users can be deleted
+                    for (User user2 : users) { // removes the user from the followed playlists of the other users
+                        for (Playlist followedPlaylist : user2.getFollowedPlaylists()) {
+                            if (followedPlaylist.getOwner().equals(username)) {
+                                user2.getFollowedPlaylists().remove(followedPlaylist);
+                                break;
+                            }
+                        }
+                    }
                     users.remove(user);
                     return username + " was successfully deleted.";
                 } else {

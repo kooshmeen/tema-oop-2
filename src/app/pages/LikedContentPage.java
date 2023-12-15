@@ -16,7 +16,7 @@ public class LikedContentPage extends Page{
         List<String> top5Songs = user.getLikedSongs().stream()
                 .sorted(Comparator.comparing(Song::getLikes).reversed())
                 .limit(5)
-                .map(Song::getName)
+                .map(song -> song.getName() + " - " + song.getArtist())
                 .toList();
 
         List<String> top5Playlists = user.getFollowedPlaylists().stream()

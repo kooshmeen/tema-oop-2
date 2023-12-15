@@ -652,10 +652,10 @@ public class User {
         if (!connectionOnline) {
             return username + " is offline.";
         }
-        if (nextPage.equals("home") && !currentPage.equals(PageType.HOME_PAGE)) {
+        if (nextPage.equals("Home")) {
             currentPage = PageType.HOME_PAGE;
             return username + " accessed " + nextPage + " successfully.";
-        } else if (nextPage.equals("LikedContent") && !currentPage.equals(PageType.LIKED_CONTENT_PAGE)) {
+        } else if (nextPage.equals("LikedContent")) {
             currentPage = PageType.LIKED_CONTENT_PAGE;
             return username + " accessed " + nextPage + " successfully.";
         }
