@@ -60,6 +60,8 @@ public class User {
     private Artist selectedArtist = null;
     private List<Artist> lastSearchedArtists;
     private List<Album> lastSearchedAlbums;
+    @Getter
+    private Album selectedAlbum = null;
 
     /**
      * Instantiates a new User.
@@ -185,6 +187,14 @@ public class User {
             selectedArtist = artist;
             currentPage = PageType.ARTIST_PAGE;
             return "Successfully selected %s".formatted(artist.getUsername() + "'s page.");
+        } else if (lastSearchedAlbum) {
+            lastSearchedAlbum = false;
+            if (itemNumber > lastSearchedAlbums.size()) {
+                return "The selected ID is too high.";
+            }
+            Album album = lastSearchedAlbums.get(itemNumber - 1);
+            selectedAlbum = album;
+            return "Successfully selected %s".formatted(album.getName() + ".");
         } else {
             LibraryEntry selected = searchBar.select(itemNumber);
 
@@ -201,6 +211,20 @@ public class User {
      * @return the string
      */
     public String load() {
+        if (selectedAlbum != null) {
+
+            Playlist albumAsPlaylist = new Playlist(selectedAlbum.getName(), selectedAlbum.getOwner(), 0);
+            // since loading a playlist is already implemented
+            // we can create a playlist object that copies the album's songs
+            for (Song song : selectedAlbum.getSongs()) {
+                albumAsPlaylist.addSong(song);
+            }
+            player.setSource(albumAsPlaylist, "playlist");
+            searchBar.clearSelection();
+            selectedAlbum = null;
+            player.pause();
+            return "Playback loaded successfully.";
+        }
         if (searchBar.getLastSelected() == null) {
             return "Please select a source before attempting to load.";
         }
