@@ -194,6 +194,25 @@ public final class Admin {
         }
         return onlineUsers;
     }
+    public static List<String> getAllUsers() {
+        List<String> allUsers = new ArrayList<>();
+        for (User user : users) {
+            if (!(user instanceof Host) && !(user instanceof Artist)) {
+                allUsers.add(user.getUsername());
+            }
+        }
+        for (User user : users) {
+            if (user instanceof Artist) {
+                allUsers.add(user.getUsername());
+            }
+        }
+        for (User user : users) {
+            if (user instanceof Host) {
+                allUsers.add(user.getUsername());
+            }
+        }
+        return allUsers;
+    }
     public static String addUser(final String username, final int age, final String city, final String type) {
         UserFactory factory;
         for (User user : users) {
@@ -229,7 +248,7 @@ public final class Admin {
                                 songInput.getTags(), songInput.getLyrics(), songInput.getGenre(),
                                 songInput.getReleaseYear(), songInput.getArtist()));
                     }
-                    Album album = new Album(albumName, releaseYear, description, newSongs);
+                    Album album = new Album(albumName, releaseYear, description, newSongs, artist.getUsername());
                     return artist.addAlbum(album);
                 } else {
                     return username + " is not an artist.";
@@ -267,6 +286,15 @@ public final class Admin {
         }
         return artists;
     }
+    public static ArrayList<Album> getAlbums() {
+        ArrayList<Album> albums = new ArrayList<>();
+        for (User user : users) {
+            if (user instanceof Artist artist) {
+                albums.addAll(artist.getAlbums());
+            }
+        }
+        return albums;
+    }
     public static String addMerch(final String username, final String merchName,
                                      final String description, final Integer price) {
         for (User user : users) {
@@ -275,6 +303,21 @@ public final class Admin {
                     return artist.addMerch(merchName, description, price);
                 } else {
                     return username + " is not a host.";
+                }
+            }
+        }
+        return "The username " + username + " doesn't exist.";
+    }
+    public static String deleteUser(final String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                if (!(user instanceof Host) && !(user instanceof Artist)) {
+                    users.remove(user);
+                    return username + " was successfully deleted.";
+                } else {
+                    return username + " can't be deleted.";
+                    // todo : add functionality for deleting artists and hosts
+                    // if no one is listening to their songs or podcasts
                 }
             }
         }

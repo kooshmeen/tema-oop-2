@@ -46,7 +46,11 @@ public final class CommandRunner {
             message = "Search returned 0 results";
         } else if (user.isConnectionOnline()){
             results = user.search(filters, type);
-            message = "Search returned " + results.size() + " results";
+            if (results != null) {
+                message = "Search returned " + results.size() + " results";
+            } else {
+                message = "Search returned 0 results";
+            }
         } else {
             message = commandInput.getUsername() + " is offline.";
         }
@@ -605,6 +609,27 @@ public final class CommandRunner {
         objectNode.put("command", commandInput.getCommand());
         objectNode.put("timestamp", commandInput.getTimestamp());
         objectNode.put("message", message);
+        objectNode.put("user", commandInput.getUsername());
+
+        return objectNode;
+    }
+    public static ObjectNode getAllUsers(final CommandInput commandInput) {
+        List<String> users = Admin.getAllUsers();
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("result", objectMapper.valueToTree(users));
+        objectNode.put("timestamp", commandInput.getTimestamp());
+
+        return objectNode;
+    }
+    public static ObjectNode deleteUser(final CommandInput commandInput) {
+        String message = Admin.deleteUser(commandInput.getUsername());
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("message", objectMapper.valueToTree(message));
+        objectNode.put("timestamp", commandInput.getTimestamp());
         objectNode.put("user", commandInput.getUsername());
 
         return objectNode;

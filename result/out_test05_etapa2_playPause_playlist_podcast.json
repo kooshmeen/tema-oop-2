@@ -35,12 +35,12 @@
   "user" : "alice22",
   "timestamp" : 55,
   "message" : "Search returned 0 results",
-  "results" : [ ]
+  "results" : null
 }, {
   "command" : "select",
   "user" : "alice22",
   "timestamp" : 57,
-  "message" : "The selected ID is too high."
+  "message" : "Please conduct a search before making a selection."
 }, {
   "command" : "printCurrentPage",
   "user" : "alice22",
@@ -68,7 +68,7 @@
   "timestamp" : 73,
   "stats" : {
     "name" : "The Power of Design",
-    "remainedTime" : 3066,
+    "remainedTime" : 3061,
     "repeat" : "No Repeat",
     "shuffle" : false,
     "paused" : false

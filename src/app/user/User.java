@@ -1,6 +1,7 @@
 package app.user;
 
 import app.Admin;
+import app.audio.Collections.Album;
 import app.audio.Collections.AudioCollection;
 import app.audio.Collections.Playlist;
 import app.audio.Collections.PlaylistOutput;
@@ -41,6 +42,7 @@ public class User {
     private final SearchBar searchBar;
     private boolean lastSearched;
     private boolean lastSearchedArtist;
+    private boolean lastSearchedAlbum;
     @Getter
     private boolean connectionOnline;
     private enum PageType {
@@ -57,6 +59,7 @@ public class User {
     @Getter
     private Artist selectedArtist = null;
     private List<Artist> lastSearchedArtists;
+    private List<Album> lastSearchedAlbums;
 
     /**
      * Instantiates a new User.
@@ -82,7 +85,9 @@ public class User {
         hostPage = new HostPage(this);
         currentPage = PageType.HOME_PAGE;
         lastSearchedArtist = false;
+        lastSearchedAlbum = false;
         lastSearchedArtists = new ArrayList<>();
+        lastSearchedAlbums = new ArrayList<>();
     }
 
     /**
@@ -93,7 +98,8 @@ public class User {
      * @return the array list
      */
     public ArrayList<String> search(final Filters filters, final String type) {
-        if (!type.equals("artist")) {
+        if (!type.equals("artist") && !type.equals("album") &&
+                !type.equals("host")) { // search normal (melodii, podcasturi, playlisturi)
             lastSearchedArtists = new ArrayList<>();
             searchBar.clearSelection();
             player.stop();
@@ -110,7 +116,7 @@ public class User {
                 results = null;
             }
             return results;
-        } else {
+        } else if (type.equals("artist")) { // search artist
             lastSearchedArtists = new ArrayList<>();
             searchBar.clearSelection();
             player.stop();
@@ -129,6 +135,32 @@ public class User {
                 results = null;
             }
             return results;
+        } else if (type.equals("album")){ // search album
+            lastSearchedAlbums = new ArrayList<>();
+            searchBar.clearSelection();
+            player.stop();
+            ArrayList<String> results = new ArrayList<>();
+            if (connectionOnline) {
+                lastSearched = true;
+                lastSearchedAlbum = true;
+                results = new ArrayList<>();
+                for (Album album : Admin.getAlbums()) {
+                    if (filters.getName() != null && album.getName().startsWith(filters.getName())) {
+                        results.add(album.getName());
+                        lastSearchedAlbums.add(album);
+                    }
+                    if (filters.getArtist() != null && album.getOwner().startsWith(filters.getOwner())
+                            || album.getOwner().equals(filters.getOwner())) {
+                        results.add(album.getName());
+                        lastSearchedAlbums.add(album);
+                    }
+                }
+            } else {
+                results = null;
+            }
+            return results;
+        } else {
+            return null;
         }
     }
 

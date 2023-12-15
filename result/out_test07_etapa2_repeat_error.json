@@ -130,6 +130,11 @@
   "timestamp" : 2555,
   "message" : "The loaded source is not a podcast."
 }, {
+  "command" : "deleteUser",
+  "message" : "melodymaster can't be deleted.",
+  "timestamp" : 2760,
+  "user" : "melodymaster"
+}, {
   "command" : "load",
   "user" : "emily30",
   "timestamp" : 3000,
@@ -246,6 +251,11 @@
   "timestamp" : 3335,
   "message" : "Please load a source before setting the repeat status."
 }, {
+  "command" : "deleteUser",
+  "message" : "melodymaster can't be deleted.",
+  "timestamp" : 3335,
+  "user" : "melodymaster"
+}, {
   "command" : "search",
   "user" : "rhythmicrider58",
   "timestamp" : 3380,
@@ -298,6 +308,11 @@
   "user" : "rhythmicrider58",
   "timestamp" : 3440,
   "message" : "Playback loaded successfully."
+}, {
+  "command" : "deleteUser",
+  "message" : "emily30 was successfully deleted.",
+  "timestamp" : 3443,
+  "user" : "emily30"
 }, {
   "command" : "like",
   "user" : "rhythmicrider58",

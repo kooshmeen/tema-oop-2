@@ -39,6 +39,10 @@
   "timestamp" : 40,
   "user" : "irene33"
 }, {
+  "command" : "getAllUsers",
+  "result" : [ "alice22", "bob35", "carol19", "david27", "emily30", "frank21", "grace25", "henry26", "irene33", "jack29", "melodicmind42", "rhythmicrider58", "harmonyhunter73", "melodymaster", "rhythmrider", "beatblazer", "harmonichero" ],
+  "timestamp" : 45
+}, {
   "command" : "addAlbum",
   "timestamp" : 50,
   "message" : "rhythmrider has added new album successfully.",
@@ -91,11 +95,16 @@
   "timestamp" : 135,
   "message" : "Liked songs:\n\t[Rhythmic Revolution]\n\nFollowed playlists:\n\t[]"
 }, {
+  "command" : "deleteUser",
+  "message" : "beatblazer can't be deleted.",
+  "timestamp" : 150,
+  "user" : "beatblazer"
+}, {
   "command" : "search",
   "user" : "alice22",
   "timestamp" : 190,
-  "message" : "Search returned 0 results",
-  "results" : [ ]
+  "message" : "Search returned 1 results",
+  "results" : [ "Beat Odyssey" ]
 }, {
   "command" : "select",
   "user" : "alice22",
@@ -107,10 +116,20 @@
   "timestamp" : 285,
   "message" : "Please select a source before attempting to load."
 }, {
+  "command" : "deleteUser",
+  "message" : "beatblazer can't be deleted.",
+  "timestamp" : 1158,
+  "user" : "beatblazer"
+}, {
   "command" : "prev",
   "user" : "alice22",
   "timestamp" : 1159,
   "message" : "Please load a source before returning to the previous track."
+}, {
+  "command" : "deleteUser",
+  "message" : "beatblazer can't be deleted.",
+  "timestamp" : 1380,
+  "user" : "beatblazer"
 }, {
   "command" : "search",
   "user" : "melodicmind42",

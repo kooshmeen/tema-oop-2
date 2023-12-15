@@ -35,7 +35,7 @@
   "user" : "jack29",
   "timestamp" : 50,
   "message" : "Search returned 0 results",
-  "results" : [ ]
+  "results" : null
 }, {
   "command" : "printCurrentPage",
   "user" : "jack29",
@@ -45,7 +45,7 @@
   "command" : "select",
   "user" : "jack29",
   "timestamp" : 57,
-  "message" : "The selected ID is too high."
+  "message" : "Please conduct a search before making a selection."
 }, {
   "command" : "search",
   "user" : "alice22",
@@ -211,6 +211,11 @@
   "message" : "Search returned 1 results",
   "results" : [ "2010 hits" ]
 }, {
+  "command" : "deleteUser",
+  "message" : "david27 was successfully deleted.",
+  "timestamp" : 3257,
+  "user" : "david27"
+}, {
   "command" : "select",
   "user" : "alice22",
   "timestamp" : 3260,
@@ -280,6 +285,11 @@
     "followers" : 1
   } ]
 }, {
+  "command" : "deleteUser",
+  "message" : "soundseeker can't be deleted.",
+  "timestamp" : 4010,
+  "user" : "soundseeker"
+}, {
   "command" : "status",
   "user" : "carol19",
   "timestamp" : 4500,
@@ -290,4 +300,9 @@
     "shuffle" : false,
     "paused" : true
   }
+}, {
+  "command" : "deleteUser",
+  "message" : "soundseeker can't be deleted.",
+  "timestamp" : 100000,
+  "user" : "soundseeker"
 } ]
