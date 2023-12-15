@@ -25963,4 +25963,8 @@
   "command" : "getTop5Songs",
   "timestamp" : 14850,
   "result" : [ "Don't", "Whatever You Need", "Start Me Up", "The Man", "Delicate" ]
+}, {
+  "command" : "getTop5Albums",
+  "result" : [ "Teen Revolution", "Bad Dirt", "Groovy Harmonies", "Dynamic Dirt", "Groovy Hood" ],
+  "timestamp" : 14850
 } ]

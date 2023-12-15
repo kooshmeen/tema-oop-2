@@ -241,7 +241,7 @@
   "user" : "musicmaven"
 }, {
   "command" : "deleteUser",
-  "message" : "audiosage can't be deleted.",
+  "message" : "audiosage was successfully deleted.",
   "timestamp" : 1100,
   "user" : "audiosage"
 }, {
@@ -256,7 +256,7 @@
   "user" : "melodicwanderer"
 }, {
   "command" : "deleteUser",
-  "message" : "musicmaven was successfully deleted.",
+  "message" : "musicmaven can't be deleted.",
   "timestamp" : 6900,
   "user" : "musicmaven"
 }, {

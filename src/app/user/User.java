@@ -1,10 +1,7 @@
 package app.user;
 
 import app.Admin;
-import app.audio.Collections.Album;
-import app.audio.Collections.AudioCollection;
-import app.audio.Collections.Playlist;
-import app.audio.Collections.PlaylistOutput;
+import app.audio.Collections.*;
 import app.audio.Files.AudioFile;
 import app.audio.Files.Song;
 import app.audio.LibraryEntry;
@@ -64,6 +61,10 @@ public class User {
     private Album selectedAlbum = null;
     @Getter
     private Host selectedHost = null;
+    @Getter
+    private Playlist selectedPlaylist = null;
+    @Getter
+    private Podcast selectedPodcast = null;
 
     /**
      * Instantiates a new User.
@@ -195,6 +196,8 @@ public class User {
      */
     public String select(final int itemNumber) {
         selectedAlbum = null;
+        selectedPlaylist = null;
+        selectedPodcast = null;
         if (!lastSearched) {
             return "Please conduct a search before making a selection.";
         }
@@ -231,6 +234,12 @@ public class User {
 
             if (selected == null) {
                 return "The selected ID is too high.";
+            }
+            if (selected instanceof Playlist) {
+                selectedPlaylist = (Playlist) selected;
+            }
+            if (selected instanceof Podcast) {
+                selectedPodcast = (Podcast) selected;
             }
             return "Successfully selected %s.".formatted(selected.getName());
         }
@@ -649,6 +658,8 @@ public class User {
         }
     }
     public String changePage(final String nextPage) {
+        selectedHost = null;
+        selectedArtist = null;
         if (!connectionOnline) {
             return username + " is offline.";
         }

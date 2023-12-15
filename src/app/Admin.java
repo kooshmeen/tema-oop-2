@@ -365,6 +365,14 @@ public final class Admin {
                                 break;
                             }
                         }
+//                        if (user2.getSelectedPlaylist() != null &&
+//                                user2.getSelectedPlaylist().getOwner().equals(username)) {
+//                            return username + " can't be deleted.";
+//                        }
+                        if (user2.getPlayer().getCurrentAudioFile() != null &&
+                                user2.getPlayer().getCurrentAudioFile().matchesOwner(username)) {
+                            return username + " can't be deleted.";
+                        }
                     }
                     users.remove(user);
                     return username + " was successfully deleted.";
@@ -393,6 +401,10 @@ public final class Admin {
                             assert user2.getPlayer().getCurrentAudioFile() != null;
                             if (user2.getSelectedHost() != null &&
                                     user2.getSelectedHost().getUsername().equals(username)) {
+                                return username + " can't be deleted.";
+                            }
+                            if (user2.getSelectedPodcast() != null &&
+                                    user2.getSelectedPodcast().getOwner().equals(username)) {
                                 return username + " can't be deleted.";
                             }
                         }
