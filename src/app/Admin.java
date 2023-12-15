@@ -8,6 +8,7 @@ import app.audio.Files.Episode;
 import app.audio.Files.Song;
 import app.user.*;
 import fileio.input.*;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,6 +18,7 @@ import java.util.List;
  * The type Admin.
  */
 public final class Admin {
+    @Getter
     private static List<User> users = new ArrayList<>();
     private static List<Song> songs = new ArrayList<>();
     private static List<Podcast> podcasts = new ArrayList<>();
@@ -428,5 +430,17 @@ public final class Admin {
             }
         }
         return null;
+    }
+    public static String removeAlbum (final String username, final String albumName) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                if (user instanceof Artist artist) {
+                    return artist.removeAlbum(username, albumName);
+                } else {
+                    return username + " is not an artist.";
+                }
+            }
+        }
+        return "The username " + username + " doesn't exist.";
     }
 }

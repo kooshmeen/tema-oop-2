@@ -695,4 +695,28 @@ public final class CommandRunner {
 
         return objectNode;
     }
+    public static ObjectNode removeAlbum(final CommandInput commandInput) {
+        String message = Admin.removeAlbum(commandInput.getUsername(), commandInput.getName());
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("message", objectMapper.valueToTree(message));
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("user", commandInput.getUsername());
+
+        return objectNode;
+    }
+    public static ObjectNode changePage(final CommandInput commandInput) {
+        User user = Admin.getUser(commandInput.getUsername());
+        assert user != null;
+        String message = user.changePage(commandInput.getNextPage());
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("message", objectMapper.valueToTree(message));
+        objectNode.put("timestamp", commandInput.getTimestamp());
+        objectNode.put("user", commandInput.getUsername());
+
+        return objectNode;
+    }
 }

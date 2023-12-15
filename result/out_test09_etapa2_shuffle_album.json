@@ -104,6 +104,11 @@
   "message" : "Search returned 1 results",
   "results" : [ "Elevate" ]
 }, {
+  "command" : "removeAlbum",
+  "message" : "The username Ed Sheeran doesn't exist.",
+  "timestamp" : 375,
+  "user" : "Ed Sheeran"
+}, {
   "command" : "select",
   "user" : "bob35",
   "timestamp" : 390,
@@ -128,6 +133,11 @@
   "user" : "david27",
   "timestamp" : 430,
   "message" : "Albums:\n\t[Harmonic Horizons]\n\nMerch:\n\t[]\n\nEvents:\n\t[Event1 - 01-01-2022:\n\tPrimul Event adaugat!]"
+}, {
+  "command" : "removeAlbum",
+  "message" : "melodymaster doesn't have an album with the given name.",
+  "timestamp" : 430,
+  "user" : "melodymaster"
 }, {
   "command" : "search",
   "user" : "bob35",
@@ -212,6 +222,11 @@
   "user" : "carol19",
   "timestamp" : 1115,
   "message" : "Like registered successfully."
+}, {
+  "command" : "removeAlbum",
+  "message" : "melodymaster can't delete this album.",
+  "timestamp" : 1200,
+  "user" : "melodymaster"
 }, {
   "command" : "search",
   "user" : "carol19",
@@ -351,6 +366,11 @@
     "paused" : false
   }
 }, {
+  "command" : "removeAlbum",
+  "message" : "melodymaster deleted the album successfully.",
+  "timestamp" : 3000,
+  "user" : "melodymaster"
+}, {
   "command" : "status",
   "user" : "bob35",
   "timestamp" : 3250,
@@ -361,6 +381,11 @@
     "shuffle" : true,
     "paused" : false
   }
+}, {
+  "command" : "changePage",
+  "message" : "carol19 accessed LikedContent successfully.",
+  "timestamp" : 3251,
+  "user" : "carol19"
 }, {
   "command" : "status",
   "user" : "bob35",
@@ -392,7 +417,7 @@
   "command" : "printCurrentPage",
   "user" : "david27",
   "timestamp" : 3900,
-  "message" : "Albums:\n\t[Harmonic Horizons]\n\nMerch:\n\t[Merch1 - 100:\n\tPrimul Merch adaugat!]\n\nEvents:\n\t[Event1 - 01-01-2022:\n\tPrimul Event adaugat!, Event2 - 05-02-2021:\n\tAl doilea Event adaugat!]"
+  "message" : "Albums:\n\t[]\n\nMerch:\n\t[Merch1 - 100:\n\tPrimul Merch adaugat!]\n\nEvents:\n\t[Event1 - 01-01-2022:\n\tPrimul Event adaugat!, Event2 - 05-02-2021:\n\tAl doilea Event adaugat!]"
 }, {
   "command" : "status",
   "user" : "bob35",
@@ -440,7 +465,7 @@
   "command" : "printCurrentPage",
   "user" : "david27",
   "timestamp" : 4400,
-  "message" : "Albums:\n\t[Harmonic Horizons]\n\nMerch:\n\t[Merch1 - 100:\n\tPrimul Merch adaugat!]\n\nEvents:\n\t[Event1 - 01-01-2022:\n\tPrimul Event adaugat!, Event2 - 05-02-2021:\n\tAl doilea Event adaugat!]"
+  "message" : "Albums:\n\t[]\n\nMerch:\n\t[Merch1 - 100:\n\tPrimul Merch adaugat!]\n\nEvents:\n\t[Event1 - 01-01-2022:\n\tPrimul Event adaugat!, Event2 - 05-02-2021:\n\tAl doilea Event adaugat!]"
 }, {
   "command" : "status",
   "user" : "bob35",
@@ -467,7 +492,7 @@
   "command" : "printCurrentPage",
   "user" : "carol19",
   "timestamp" : 5000,
-  "message" : "Liked songs:\n\t[Digital Dreams]\n\nFollowed playlists:\n\t[My playlist]"
+  "message" : "Liked songs:\n\t[Digital Dreams]\n\nFollowed playlists:\n\t[My playlist - bob35]"
 }, {
   "command" : "status",
   "user" : "bob35",

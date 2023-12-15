@@ -90,4 +90,25 @@ public class Artist extends User {
         merch.add(new Merch(merchName, description, price));
         return getUsername() + " has added new merchandise successfully.";
     }
+    public String removeAlbum(final String username, final String albumName) {
+        if (albums == null) {
+            return username + " doesn't have an album with the given name.";
+        }
+        for (Album album : albums) {
+            if (album.getName().equals(albumName)) {
+                for (User user : Admin.getUsers()) {
+                    if (user.getSelectedAlbum() != null &&
+                            user.getSelectedAlbum().getName().equals(albumName)) {
+                        return username + " can't delete this album.";
+                    }
+                    if (user.getSelectedAlbum() != null) {
+                        return user.getUsername() + " has this album selected." + user.getSelectedAlbum().getName();
+                    }
+                }
+                albums.remove(album);
+                return username + " deleted the album successfully.";
+            }
+        }
+        return username + " doesn't have an album with the given name.";
+    }
 }

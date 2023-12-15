@@ -22,7 +22,7 @@ public class LikedContentPage extends Page{
         List<String> top5Playlists = user.getFollowedPlaylists().stream()
                 .sorted(Comparator.comparing(Playlist::getTotalLikes).reversed())
                 .limit(5)
-                .map(Playlist::getName)
+                .map(playlist -> playlist.getName() + " - " + playlist.getOwner())
                 .toList();
         String songsOutput = String.join(", ", top5Songs);
         String playlistsOutput = String.join(", ", top5Playlists);

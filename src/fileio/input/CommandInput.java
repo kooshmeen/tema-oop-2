@@ -30,6 +30,7 @@ public final class CommandInput {
     private Integer price;
     @Getter
     private ArrayList<EpisodeInput> episodes;
+    @Getter
     private String nextPage;
 
     public CommandInput() {

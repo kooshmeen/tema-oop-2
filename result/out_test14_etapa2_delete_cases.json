@@ -215,6 +215,11 @@
   "timestamp" : 930,
   "user" : "audiosage"
 }, {
+  "command" : "changePage",
+  "message" : "soundseeker21 is trying to access a non-existent page.",
+  "timestamp" : 955,
+  "user" : "soundseeker21"
+}, {
   "command" : "deleteUser",
   "message" : "melodicwanderer was successfully deleted.",
   "timestamp" : 960,
@@ -274,6 +279,11 @@
   "message" : "sonicpainter was successfully deleted.",
   "timestamp" : 7860,
   "user" : "sonicpainter"
+}, {
+  "command" : "changePage",
+  "message" : "david27 is trying to access a non-existent page.",
+  "timestamp" : 7885,
+  "user" : "david27"
 }, {
   "command" : "deleteUser",
   "message" : "The username sonicpainter doesn't exist.",

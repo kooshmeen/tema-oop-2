@@ -8,10 +8,7 @@ import app.audio.Collections.PlaylistOutput;
 import app.audio.Files.AudioFile;
 import app.audio.Files.Song;
 import app.audio.LibraryEntry;
-import app.pages.ArtistPage;
-import app.pages.HomePage;
-import app.pages.HostPage;
-import app.pages.LikedContentPage;
+import app.pages.*;
 import app.player.Player;
 import app.player.PlayerStats;
 import app.searchBar.Filters;
@@ -197,6 +194,7 @@ public class User {
      * @return the string
      */
     public String select(final int itemNumber) {
+        selectedAlbum = null;
         if (!lastSearched) {
             return "Please conduct a search before making a selection.";
         }
@@ -254,7 +252,6 @@ public class User {
             }
             player.setSource(albumAsPlaylist, "playlist");
             searchBar.clearSelection();
-            selectedAlbum = null;
             player.pause();
             return "Playback loaded successfully.";
         }
@@ -650,6 +647,19 @@ public class User {
         } else {
             return hostPage.displayContent();
         }
+    }
+    public String changePage(final String nextPage) {
+        if (!connectionOnline) {
+            return username + " is offline.";
+        }
+        if (nextPage.equals("home") && !currentPage.equals(PageType.HOME_PAGE)) {
+            currentPage = PageType.HOME_PAGE;
+            return username + " accessed " + nextPage + " successfully.";
+        } else if (nextPage.equals("LikedContent") && !currentPage.equals(PageType.LIKED_CONTENT_PAGE)) {
+            currentPage = PageType.LIKED_CONTENT_PAGE;
+            return username + " accessed " + nextPage + " successfully.";
+        }
+        return username + " is trying to access a non-existent page.";
     }
 
     /**
