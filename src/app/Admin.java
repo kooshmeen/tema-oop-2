@@ -358,8 +358,10 @@ public final class Admin {
                 if (!(user instanceof Host) && !(user instanceof Artist)) { // regular users can be deleted
                     for (User user2 : users) { // removes the user from the followed playlists of the other users
                         for (Playlist followedPlaylist : user2.getFollowedPlaylists()) {
+                            followedPlaylist.decreaseFollowers();
                             if (followedPlaylist.getOwner().equals(username)) {
                                 user2.getFollowedPlaylists().remove(followedPlaylist);
+
                                 break;
                             }
                         }
@@ -389,8 +391,8 @@ public final class Admin {
                     } else {
                         for (User user2 : users) {
                             assert user2.getPlayer().getCurrentAudioFile() != null;
-                            if (user2.getPlayer().getCurrentAudioFile() != null &&
-                                    user2.getPlayer().getCurrentAudioFile().matchesOwner(username)) {
+                            if (user2.getSelectedHost() != null &&
+                                    user2.getSelectedHost().getUsername().equals(username)) {
                                 return username + " can't be deleted.";
                             }
                         }
@@ -446,6 +448,18 @@ public final class Admin {
                     return artist.removeAlbum(username, albumName);
                 } else {
                     return username + " is not an artist.";
+                }
+            }
+        }
+        return "The username " + username + " doesn't exist.";
+    }
+    public static String removePodcast (final String username, final String podcastName) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                if (user instanceof Host host) {
+                    return host.removePodcast(podcastName);
+                } else {
+                    return username + " is not a host.";
                 }
             }
         }

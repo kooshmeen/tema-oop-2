@@ -211,7 +211,7 @@
   "user" : "sonicpainter"
 }, {
   "command" : "deleteUser",
-  "message" : "audiosage was successfully deleted.",
+  "message" : "audiosage can't be deleted.",
   "timestamp" : 930,
   "user" : "audiosage"
 }, {
@@ -235,8 +235,13 @@
   "timestamp" : 975,
   "user" : "sonicpainter"
 }, {
+  "command" : "removePodcast",
+  "message" : "musicmaven deleted the podcast successfully.",
+  "timestamp" : 980,
+  "user" : "musicmaven"
+}, {
   "command" : "deleteUser",
-  "message" : "The username audiosage doesn't exist.",
+  "message" : "audiosage can't be deleted.",
   "timestamp" : 1100,
   "user" : "audiosage"
 }, {

@@ -67,4 +67,16 @@ public class Host extends User{
         }
         return podcasts;
     }
+    public String removePodcast(String podcastName) {
+        if (podcasts == null) {
+            podcasts = new ArrayList<>();
+        }
+        for (Podcast podcast : podcasts) {
+            if (podcast.getName().equals(podcastName)) {
+                podcasts.remove(podcast);
+                return getUsername() + " deleted the podcast successfully.";
+            }
+        }
+        return getUsername() + " doesn't have a podcast with the given name.";
+    }
 }
