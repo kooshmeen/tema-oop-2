@@ -7,14 +7,21 @@ import app.audio.Collections.Album;
 import app.audio.Collections.Playlist;
 import app.audio.Files.Song;
 import fileio.input.DateInput;
-import fileio.input.SongInput;
 import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Artist extends User {
-
+    @Getter
+    private ArrayList<Album> albums;
+    @Getter
+    private ArrayList<Event> events;
+    @Getter
+    private ArrayList<Merch> merch;
+    private final static int MAX_DAYS = 31;
+    private final static int MAX_MONTHS = 12;
+    private final static int MAX_DAYS_FEBRUARY = 28;
     /**
      * Instantiates a new User.
      *
@@ -22,23 +29,30 @@ public class Artist extends User {
      * @param age      the age
      * @param city     the city
      */
-    @Getter
-    private ArrayList<Album> albums;
-    @Getter
-    private ArrayList<Event> events;
-    @Getter
-    private ArrayList<Merch> merch;
-    public Artist(String username, int age, String city) {
+    public Artist(final String username, final int age, final String city) {
         super(username, age, city);
         this.albums = new ArrayList<>();
         this.events = new ArrayList<>();
         this.merch = new ArrayList<>();
     }
+
+    /**
+     * Switch connection status.
+     * because an artist can't switch his connection status
+     * it overrides the method from User
+     * @return the failed message
+     */
     @Override
     public String switchConnectionStatus() {
         return getUsername() + " is not a regular user.";
     }
-    public String addAlbum(Album album) {
+
+    /**
+     * adds an album to the artist's albums
+     * @param album the album to be added
+     * @return a message
+     */
+    public String addAlbum(final Album album) {
         if (albums == null) {
             albums = new ArrayList<>();
         }
@@ -58,7 +72,16 @@ public class Artist extends User {
         Admin.addSongs(album.getSongs());
         return getUsername() + " has added new album successfully.";
     }
-    public String addEvent(final String eventName, final DateInput date, final String description) {
+
+    /**
+     * adds an event to the artist's events
+     * @param eventName the name of the event
+     * @param date the date of the event
+     * @param description the description of the event
+     * @return a message
+     */
+    public String addEvent(final String eventName, final DateInput date,
+                           final String description) {
         if (events == null) {
             events = new ArrayList<>();
         }
@@ -70,13 +93,23 @@ public class Artist extends User {
         int day = date.getDay();
         int month = date.getMonth();
         int year = date.getYear();
-        if (day < 1 || day > 31 || month < 1 || month > 12 || year < 0 || (month == 2 && day > 28)) {
+        if (day < 1 || day > MAX_DAYS || month < 1 || month > MAX_MONTHS
+                || year < 0 || (month == 2 && day > MAX_DAYS_FEBRUARY)) {
             return "Event for " + getUsername() + " does not have a valid date.";
         }
         events.add(new Event(eventName, date, description));
         return getUsername() + " has added new event successfully.";
     }
-    public String addMerch(final String merchName, final String description, final Integer price) {
+
+    /**
+     * adds a merch to the artist's merch
+     * @param merchName the name of the merch
+     * @param description the description of the merch
+     * @param price the price of the merch
+     * @return a message
+     */
+    public String addMerch(final String merchName, final String description,
+                           final Integer price) {
         if (merch == null) {
             merch = new ArrayList<>();
         }
@@ -91,6 +124,13 @@ public class Artist extends User {
         merch.add(new Merch(merchName, description, price));
         return getUsername() + " has added new merchandise successfully.";
     }
+
+    /**
+     * removes an album from the artist's albums
+     * @param username the username of the artist
+     * @param albumName the name of the album
+     * @return a message
+     */
     public String removeAlbum(final String username, final String albumName) {
         if (albums == null) {
             return username + " doesn't have an album with the given name.";
@@ -114,7 +154,7 @@ public class Artist extends User {
                         }
                     }
                     if (user.getSelectedAlbum() != null) {
-                        return user.getUsername() + " has this album selected." + user.getSelectedAlbum().getName();
+                        return username + " can't delete this album.";
                     }
                 }
                 albums.remove(album);
@@ -123,6 +163,13 @@ public class Artist extends User {
         }
         return username + " doesn't have an album with the given name.";
     }
+
+    /**
+     * removes an event from the artist's events
+     * @param username the username of the artist
+     * @param eventName the name of the event
+     * @return a message
+     */
     public String removeEvent(final String username, final String eventName) {
         if (events == null) {
             return username + " doesn't have an event with the given name.";
@@ -134,5 +181,18 @@ public class Artist extends User {
             }
         }
         return username + " doesn't have an event with the given name.";
+    }
+
+    /**
+     * gets the number of likes of the artist
+     * by adding the likes of all his albums
+     * @return the number of likes
+     */
+    public int getLikes() {
+        int likes = 0;
+        for (Album album : albums) {
+            likes += album.getLikes();
+        }
+        return likes;
     }
 }

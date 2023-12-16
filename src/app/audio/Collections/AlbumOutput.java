@@ -9,7 +9,7 @@ public class AlbumOutput {
     @Getter
     private ArrayList<String> songs;
 
-    public AlbumOutput(String name, ArrayList<String> songs) {
+    public AlbumOutput(final String name, final ArrayList<String> songs) {
         this.name = name;
         this.songs = songs;
     }

@@ -9,6 +9,7 @@ import app.audio.Files.Song;
 import app.player.PlayerStats;
 import app.searchBar.Filters;
 import app.user.Artist;
+import app.user.Host;
 import app.user.User;
 import app.utils.Enums;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -501,7 +502,9 @@ public final class CommandRunner {
         } else {
             message = "The username " + commandInput.getUsername() + " doesn't exist.";
         }
-
+        if (user instanceof Artist || user instanceof Host) {
+            message = commandInput.getUsername() + " is not a normal user.";
+        }
         ObjectNode objectNode = objectMapper.createObjectNode();
         objectNode.put("command", commandInput.getCommand());
         objectNode.put("timestamp", commandInput.getTimestamp());
@@ -747,6 +750,16 @@ public final class CommandRunner {
         ObjectNode objectNode = objectMapper.createObjectNode();
         objectNode.put("command", commandInput.getCommand());
         objectNode.put("result", objectMapper.valueToTree(albums));
+        objectNode.put("timestamp", commandInput.getTimestamp());
+
+        return objectNode;
+    }
+    public static ObjectNode getTop5Artists(final CommandInput commandInput) {
+        ArrayList<String> artists = Admin.getTop5Artists();
+
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.put("command", commandInput.getCommand());
+        objectNode.put("result", objectMapper.valueToTree(artists));
         objectNode.put("timestamp", commandInput.getTimestamp());
 
         return objectNode;

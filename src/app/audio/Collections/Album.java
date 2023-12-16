@@ -1,6 +1,5 @@
 package app.audio.Collections;
 import app.audio.Files.Song;
-import fileio.input.SongInput;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -19,6 +18,10 @@ public class Album {
         this.songs = songs;
         this.owner = owner;
     }
+    /**
+     * @return the number of likes of the album
+     * by counting the likes of all songs
+     */
     public Integer getLikes() {
         Integer likes = 0;
         for (Song song : songs) {

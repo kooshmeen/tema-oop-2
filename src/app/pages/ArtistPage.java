@@ -1,17 +1,18 @@
 package app.pages;
 
-import app.EventMerch.Event;
-import app.EventMerch.Merch;
 import app.audio.Collections.Album;
 import app.user.Artist;
 import app.user.User;
 
 import java.util.List;
 
-public class ArtistPage extends Page{
-    public ArtistPage(User user) {
+public class ArtistPage extends Page {
+    public ArtistPage(final User user) {
         super(user);
     }
+    /**
+     * @return the content of the page
+     */
     @Override
     public String displayContent() {
         Artist selectedArtist = user.getSelectedArtist();

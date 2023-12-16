@@ -133,44 +133,17 @@ public final class CommandInput {
     public void setName(final String name) {
         this.name = name;
     }
-    public Integer getReleaseYear(final Integer releaseYear) {
-        return releaseYear;
-    }
     public void setReleaseYear(final Integer releaseYear) {
         this.releaseYear = releaseYear;
-    }
-    public String getDescription(final String description) {
-        return description;
     }
     public void setDescription(final String description) {
         this.description = description;
     }
-    public ArrayList<SongInput> getSongs(final ArrayList<SongInput> songs) {
-        return songs;
-    }
     public void setSongs(final ArrayList<SongInput> songs) {
         this.songs = songs;
     }
-    public DateInput getDate(final DateInput date) {
-        return date;
-    }
-    public void setDate(final DateInput date) {
-        this.date = date;
-    }
-    public Integer getPrice(final Integer price) {
-        return price;
-    }
-    public void setPrice(final Integer price) {
-        this.price = price;
-    }
-    public ArrayList<EpisodeInput> getEpisodes(final ArrayList<EpisodeInput> episodes) {
-        return episodes;
-    }
     public void setEpisodes(final ArrayList<EpisodeInput> episodes) {
         this.episodes = episodes;
-    }
-    public String getNextPage(final String nextPage) {
-        return nextPage;
     }
     public void setNextPage(final String nextPage) {
         this.nextPage = nextPage;

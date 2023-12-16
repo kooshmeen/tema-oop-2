@@ -117,8 +117,8 @@ public final class Playlist extends AudioCollection {
     @Override
     public boolean isVisibleToUser(final String user) {
         return this.getVisibility() == Enums.Visibility.PUBLIC
-               || (this.getVisibility() == Enums.Visibility.PRIVATE
-                   && this.getOwner().equals(user));
+                || (this.getVisibility() == Enums.Visibility.PRIVATE
+                && this.getOwner().equals(user));
     }
 
     @Override
@@ -135,7 +135,11 @@ public final class Playlist extends AudioCollection {
             return count == Integer.parseInt(query);
         }
     }
-
+    /**
+     * Gets total likes by adding the likes of all songs in the playlist.
+     *
+     * @return the total likes
+     */
     public Integer getTotalLikes() {
         Integer totalLikes = 0;
         for (Song song : songs) {

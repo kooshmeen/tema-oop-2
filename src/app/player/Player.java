@@ -47,6 +47,9 @@ public final class Player {
         source = null;
         shuffle = false;
     }
+    /**
+     * Switches between offline and online, for simulating time.
+     */
     public void switchOffline() {
         offline = !offline;
     }
@@ -55,8 +58,8 @@ public final class Player {
         if (source != null && source.getAudioFile() != null) {
             PodcastBookmark currentBookmark =
                     new PodcastBookmark(source.getAudioCollection().getName(),
-                                        source.getIndex(),
-                                        source.getDuration());
+                            source.getIndex(),
+                            source.getDuration());
             bookmarks.removeIf(bookmark -> bookmark.getName().equals(currentBookmark.getName()));
             bookmarks.add(currentBookmark);
         }

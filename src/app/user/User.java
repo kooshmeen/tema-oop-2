@@ -41,6 +41,7 @@ public class User {
     private boolean lastSearchedHost; // if last searched was a host
     @Getter
     private boolean connectionOnline;
+    private boolean loaded;
     private enum PageType {
         HOME_PAGE,
         LIKED_CONTENT_PAGE,
@@ -94,6 +95,7 @@ public class User {
         lastSearchedHost = false;
         lastSearchedArtists = new ArrayList<>();
         lastSearchedAlbums = new ArrayList<>();
+        loaded = false;
     }
 
     /**
@@ -107,6 +109,9 @@ public class User {
         if (!type.equals("artist") && !type.equals("album") &&
                 !type.equals("host")) { // search normal (melodii, podcasturi, playlisturi)
             lastSearchedArtists = new ArrayList<>();
+            selectedAlbum = null;
+            selectedPlaylist = null;
+            selectedPodcast = null;
             searchBar.clearSelection();
             player.stop();
             ArrayList<String> results;
@@ -144,6 +149,7 @@ public class User {
             return results;
         } else if (type.equals("album")){ // search album
             lastSearchedAlbums = new ArrayList<>();
+            selectedAlbum = null;
             searchBar.clearSelection();
             player.stop();
             ArrayList<String> results = new ArrayList<>();
@@ -251,6 +257,7 @@ public class User {
      * @return the string
      */
     public String load() {
+        loaded = false;
         if (selectedAlbum != null) {
 
             Playlist albumAsPlaylist = new Playlist(selectedAlbum.getName(), selectedAlbum.getOwner(), 0);
@@ -262,6 +269,7 @@ public class User {
             player.setSource(albumAsPlaylist, "playlist");
             searchBar.clearSelection();
             player.pause();
+            loaded = true;
             return "Playback loaded successfully.";
         }
         if (searchBar.getLastSelected() == null) {
@@ -269,7 +277,7 @@ public class User {
         }
 
         if (!searchBar.getLastSearchType().equals("song")
-            && ((AudioCollection) searchBar.getLastSelected()).getNumberOfTracks() == 0) {
+                && ((AudioCollection) searchBar.getLastSelected()).getNumberOfTracks() == 0) {
             return "You can't load an empty audio collection!";
         }
 
@@ -277,6 +285,7 @@ public class User {
         searchBar.clearSelection();
 
         player.pause();
+        loaded = true;
 
         return "Playback loaded successfully.";
     }
@@ -404,7 +413,7 @@ public class User {
      * @return the string
      */
     public String like() {
-        if (player.getCurrentAudioFile() == null) {
+        if (player.getCurrentAudioFile() == null || !loaded) {
             return "Please load a source before liking or unliking.";
         }
 
@@ -434,7 +443,7 @@ public class User {
      * @return the string
      */
     public String next() {
-        if (player.getCurrentAudioFile() == null) {
+        if (player.getCurrentAudioFile() == null || !loaded) {
             return "Please load a source before skipping to the next track.";
         }
 

@@ -1,13 +1,22 @@
 package app;
 
-import app.EventMerch.Merch;
 import app.audio.Collections.Album;
 import app.audio.Collections.Playlist;
 import app.audio.Collections.Podcast;
 import app.audio.Files.Episode;
 import app.audio.Files.Song;
-import app.user.*;
-import fileio.input.*;
+import app.user.Artist;
+import app.user.Host;
+import app.user.User;
+import app.user.UserFactory;
+import app.user.ArtistUserFactory;
+import app.user.HostUserFactory;
+import app.user.RegularUserFactory;
+import fileio.input.DateInput;
+import fileio.input.EpisodeInput;
+import fileio.input.PodcastInput;
+import fileio.input.SongInput;
+import fileio.input.UserInput;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -187,7 +196,11 @@ public final class Admin {
         podcasts = new ArrayList<>();
         timestamp = 0;
     }
-
+    /**
+     * Gets online users.
+     *
+     * @return the online users
+     */
     public static List<String> getOnlineUsers() {
         List<String> onlineUsers = new ArrayList<>();
         for (User user : users) {
@@ -197,7 +210,11 @@ public final class Admin {
         }
         return onlineUsers;
     }
-
+    /**
+     * Gets all users.
+     *
+     * @return the all users
+     */
     public static List<String> getAllUsers() {
         List<String> allUsers = new ArrayList<>();
         for (User user : users) {
@@ -217,44 +234,61 @@ public final class Admin {
         }
         return allUsers;
     }
-
-    public static String addUser(final String username, final int age, final String city, final String type) {
+    /**
+     * adds a user
+     *
+     *  @param username the username
+     *  @param age the age
+     *  @param city the city
+     *  @param type the type (regular, artist or host)
+     *  @return the string
+     */
+    public static String addUser(final String username, final int age,
+                                 final String city, final String type) {
         UserFactory factory;
         for (User user : users) {
             if (user.getUsername().equals(username)) {
                 return "The username " + username + " is already taken.";
             }
         }
-        switch (type) {
-            case "user":
-                factory = new RegularUserFactory();
-                break;
-            case "artist":
-                factory = new ArtistUserFactory();
-                break;
-            case "host":
-                factory = new HostUserFactory();
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid user type: " + type);
-        }
+        factory = switch (type) {
+            case "user" -> new RegularUserFactory();
+            case "artist" -> new ArtistUserFactory();
+            case "host" -> new HostUserFactory();
+            default -> throw new IllegalArgumentException("Invalid user type: " + type);
+        };
         User user = factory.createUser(username, age, city);
         users.add(user);
         return "The username " + username + " has been added successfully.";
     }
 
-    public static String addAlbum(final String username, final String albumName, final int releaseYear,
-                                  final String description, final ArrayList<SongInput> songs) {
+    /**
+     * adds an album
+     * @param username the username
+     * @param albumName the album name
+     * @param releaseYear the release year
+     * @param description the description
+     * @param albumSongs the songs in the album
+     * @return the string
+     */
+    public static String addAlbum(final String username, final String albumName,
+                                  final int releaseYear, final String description,
+                                  final ArrayList<SongInput> albumSongs) {
         for (User user : users) {
             if (user.getUsername().equals(username)) {
                 if (user instanceof Artist artist) {
                     ArrayList<Song> newSongs = new ArrayList<>();
-                    for (SongInput songInput : songs) {
-                        newSongs.add(new Song(songInput.getName(), songInput.getDuration(), songInput.getAlbum(),
-                                songInput.getTags(), songInput.getLyrics(), songInput.getGenre(),
-                                songInput.getReleaseYear(), songInput.getArtist()));
+                    for (SongInput songInput : albumSongs) {
+                        newSongs.add(new Song(songInput.getName(),
+                                songInput.getDuration(),
+                                songInput.getAlbum(),
+                                songInput.getTags(), songInput.getLyrics(),
+                                songInput.getGenre(),
+                                songInput.getReleaseYear(),
+                                songInput.getArtist()));
                     }
-                    Album album = new Album(albumName, releaseYear, description, newSongs, artist.getUsername());
+                    Album album = new Album(albumName, releaseYear,
+                            description, newSongs, artist.getUsername());
                     return artist.addAlbum(album);
                 } else {
                     return username + " is not an artist.";
@@ -263,7 +297,13 @@ public final class Admin {
         }
         return "The username " + username + " doesn't exist.";
     }
-
+    /**
+     * adds a podcast
+     * @param username the username
+     * @param podcastName the podcast name
+     * @param episodes the episodes
+     * @return the string
+     */
     public static String addPodcast(final String username, final String podcastName,
                                     final ArrayList<EpisodeInput> episodes) {
         for (User user : users) {
@@ -286,6 +326,11 @@ public final class Admin {
         return "The username " + username + " doesn't exist.";
     }
 
+    /**
+     * adds songs to the list of songs (library)
+     * @param newSongs the new songs
+     */
+
     public static void addSongs(final ArrayList<Song> newSongs) {
         for (Song song : newSongs) {
             songs.add(new Song(song.getName(), song.getDuration(), song.getAlbum(),
@@ -294,8 +339,16 @@ public final class Admin {
         }
     }
 
-    public static String addEvent(final String username, final String eventName, final DateInput date,
-                                  final String description) {
+    /**
+     *
+     * @param username the username
+     * @param eventName the event name
+     * @param date the date
+     * @param description the description
+     * @return the message string
+     */
+    public static String addEvent(final String username, final String eventName,
+                                  final DateInput date, final String description) {
         for (User user : users) {
             if (user.getUsername().equals(username)) {
                 if (user instanceof Artist artist) {
@@ -307,7 +360,11 @@ public final class Admin {
         }
         return "The username " + username + " doesn't exist.";
     }
-
+    /**
+     * Gets just artists from all users.
+     *
+     * @return the artists
+     */
     public static ArrayList<Artist> getArtists() {
         ArrayList<Artist> artists = new ArrayList<>();
         for (User user : users) {
@@ -317,7 +374,11 @@ public final class Admin {
         }
         return artists;
     }
-
+    /**
+     * Gets albums from artist type users.
+     *
+     * @return the albums
+     */
     public static ArrayList<Album> getAlbums() {
         ArrayList<Album> albums = new ArrayList<>();
         for (User user : users) {
@@ -327,7 +388,11 @@ public final class Admin {
         }
         return albums;
     }
-
+    /**
+     * Gets hosts from all users.
+     *
+     * @return the hosts
+     */
     public static ArrayList<Host> getHosts() {
         ArrayList<Host> hosts = new ArrayList<>();
         for (User user : users) {
@@ -338,6 +403,14 @@ public final class Admin {
         return hosts;
     }
 
+    /**
+     * adds merch to an artists merch list
+     * @param username the username
+     * @param merchName the merch name
+     * @param description the description
+     * @param price the price
+     * @return the message string
+     */
     public static String addMerch(final String username, final String merchName,
                                   final String description, final Integer price) {
         for (User user : users) {
@@ -352,11 +425,18 @@ public final class Admin {
         return "The username " + username + " doesn't exist.";
     }
 
+    /**
+     * deletes a user
+     * @param username the username of the user to be deleted
+     * @return the message string
+     */
     public static String deleteUser(final String username) {
         for (User user : users) {
             if (user.getUsername().equals(username)) {
-                if (!(user instanceof Host) && !(user instanceof Artist)) { // regular users can be deleted
-                    for (User user2 : users) { // removes the user from the followed playlists of the other users
+                if (!(user instanceof Host) && !(user instanceof Artist)) {
+                    // regular users can be deleted
+                    for (User user2 : users) {
+                        // removes the user from the followed playlists of the other users
                         for (Playlist followedPlaylist : user2.getFollowedPlaylists()) {
                             followedPlaylist.decreaseFollowers();
                             if (followedPlaylist.getOwner().equals(username)) {
@@ -365,28 +445,33 @@ public final class Admin {
                                 break;
                             }
                         }
-//                        if (user2.getSelectedPlaylist() != null &&
-//                                user2.getSelectedPlaylist().getOwner().equals(username)) {
-//                            return username + " can't be deleted.";
-//                        }
-                        if (user2.getPlayer().getCurrentAudioFile() != null &&
-                                user2.getPlayer().getCurrentAudioFile().matchesOwner(username)) {
+                        if (user2.getPlayer().getCurrentAudioFile() != null
+                                && user2.getPlayer().getCurrentAudioFile().
+                                matchesOwner(username)) {
                             return username + " can't be deleted.";
+                        }
+                    }
+                    for (Song song : songs) {
+                        if (user.getLikedSongs().contains(song)) {
+                            song.dislike();
                         }
                     }
                     users.remove(user);
                     return username + " was successfully deleted.";
                 } else {
                     if (user instanceof Artist) {
-                        for (User user2 : users) { // checks to see if any user is listening to the artist
+                        for (User user2 : users) {
+                            // checks to see if any user is listening to the artist
                             assert user2.getPlayer().getCurrentAudioFile() != null;
-                            if ((user2.getPlayer().getCurrentAudioFile() != null &&
-                                    user2.getPlayer().getCurrentAudioFile().matchesArtist(username))) {
+                            if ((user2.getPlayer().getCurrentAudioFile() != null
+                                    && user2.getPlayer().getCurrentAudioFile()
+                                    .matchesArtist(username))) {
                                 return username + " can't be deleted.";
                             }
                         }
                         songs.removeIf(song -> song.getArtist().equals(username));
-                        for (User user2 : users) { // removes the songs from the liked songs of the users
+                        for (User user2 : users) {
+                            // removes the songs from the liked songs of the users
                             for (Song likedSong : user2.getLikedSongs()) {
                                 if (likedSong.getArtist().equals(username)) {
                                     user2.getLikedSongs().remove(likedSong);
@@ -399,12 +484,12 @@ public final class Admin {
                     } else {
                         for (User user2 : users) {
                             assert user2.getPlayer().getCurrentAudioFile() != null;
-                            if (user2.getSelectedHost() != null &&
-                                    user2.getSelectedHost().getUsername().equals(username)) {
+                            if (user2.getSelectedHost() != null
+                                    && user2.getSelectedHost().getUsername().equals(username)) {
                                 return username + " can't be deleted.";
                             }
-                            if (user2.getSelectedPodcast() != null &&
-                                    user2.getSelectedPodcast().getOwner().equals(username)) {
+                            if (user2.getSelectedPodcast() != null
+                                    && user2.getSelectedPodcast().getOwner().equals(username)) {
                                 return username + " can't be deleted.";
                             }
                         }
@@ -417,7 +502,15 @@ public final class Admin {
         return "The username " + username + " doesn't exist.";
     }
 
-    public static String addAnnouncement(final String username, final String podcastName, final String message) {
+    /**
+     * adds an anouncement to a host's announcement list
+     * @param username the username of the host
+     * @param podcastName the podcast name
+     * @param message the message
+     * @return the message string
+     */
+    public static String addAnnouncement(final String username, final String podcastName,
+                                         final String message) {
         for (User user : users) {
             if (user.getUsername().equals(username)) {
                 if (user instanceof Host host) {
@@ -430,6 +523,12 @@ public final class Admin {
         return "The username " + username + " doesn't exist.";
     }
 
+    /**
+     * removes an anouncement from a host's announcement list
+     * @param username the username of the host
+     * @param podcastName the podcast name
+     * @return the message string
+     */
     public static String removeAnnouncement(final String username, final String podcastName) {
         for (User user : users) {
             if (user.getUsername().equals(username)) {
@@ -443,6 +542,11 @@ public final class Admin {
         return "The username " + username + " doesn't exist.";
     }
 
+    /**
+     * shows the podcasts of a host
+     * @param username the username of the host
+     * @return the list of podcasts
+     */
     public static ArrayList<Podcast> showPodcasts(final String username) {
         for (User user : users) {
             if (user.getUsername().equals(username)) {
@@ -453,7 +557,14 @@ public final class Admin {
         }
         return null;
     }
-    public static String removeAlbum (final String username, final String albumName) {
+
+    /**
+     * removes an album
+     * @param username the username of the artist
+     * @param albumName the album name
+     * @return the message string
+     */
+    public static String removeAlbum(final String username, final String albumName) {
         for (User user : users) {
             if (user.getUsername().equals(username)) {
                 if (user instanceof Artist artist) {
@@ -465,7 +576,13 @@ public final class Admin {
         }
         return "The username " + username + " doesn't exist.";
     }
-    public static String removePodcast (final String username, final String podcastName) {
+    /**
+     * removes a podcast
+     * @param username the username of the host
+     * @param podcastName the podcast name
+     * @return the message string
+     */
+    public static String removePodcast(final String username, final String podcastName) {
         for (User user : users) {
             if (user.getUsername().equals(username)) {
                 if (user instanceof Host host) {
@@ -477,7 +594,13 @@ public final class Admin {
         }
         return "The username " + username + " doesn't exist.";
     }
-    public static String removeEvent (final String username, final String eventName) {
+    /**
+     * removes an event
+     * @param username the username of the artist
+     * @param eventName the event name
+     * @return the message string
+     */
+    public static String removeEvent(final String username, final String eventName) {
         for (User user : users) {
             if (user.getUsername().equals(username)) {
                 if (user instanceof Artist artist) {
@@ -489,9 +612,15 @@ public final class Admin {
         }
         return "The username " + username + " doesn't exist.";
     }
-    public static ArrayList<String> getTop5Albums () {
+
+    /**
+     * gets top 5 albums with most likes between all songs
+     * @return the list of albums
+     */
+    public static ArrayList<String> getTop5Albums() {
         ArrayList<Album> albums = getAlbums();
-        albums.sort(Comparator.comparingInt(Album::getLikes).reversed());
+        albums.sort(Comparator.comparingInt(Album::getLikes).reversed()
+                .thenComparing(Album::getName));
         ArrayList<String> topAlbums = new ArrayList<>();
         int count = 0;
         for (Album album : albums) {
@@ -502,5 +631,24 @@ public final class Admin {
             count++;
         }
         return topAlbums;
+    }
+
+    /**
+     * gets top 5 artists with most likes between all songs
+     * @return the list of artists
+     */
+    public static ArrayList<String> getTop5Artists() {
+        ArrayList<Artist> artists = getArtists();
+        artists.sort(Comparator.comparingInt(Artist::getLikes).reversed());
+        ArrayList<String> topArtists = new ArrayList<>();
+        int count = 0;
+        for (Artist artist : artists) {
+            if (count >= LIMIT) {
+                break;
+            }
+            topArtists.add(artist.getUsername());
+            count++;
+        }
+        return topArtists;
     }
 }

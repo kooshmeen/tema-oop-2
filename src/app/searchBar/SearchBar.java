@@ -3,7 +3,6 @@ package app.searchBar;
 
 import app.Admin;
 import app.audio.LibraryEntry;
-import app.user.Artist;
 import lombok.Getter;
 
 import java.util.ArrayList;

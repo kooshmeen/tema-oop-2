@@ -8,10 +8,15 @@ import app.user.User;
 
 import java.util.List;
 
-public class HostPage extends Page{
-    public HostPage(User user) {
+public class HostPage extends Page {
+    public HostPage(final User user) {
         super(user);
     }
+    /**
+     * Displays the content of the page.
+     *
+     * @return the content of the page
+     */
     @Override
     public String displayContent() {
         Host selectedHost = user.getSelectedHost();
@@ -25,7 +30,8 @@ public class HostPage extends Page{
             Podcast podcast = podcasts.get(i);
             podcastsOutput.append(podcast.getName()).append(":\n\t[");
             for (Episode episode : podcast.getEpisodes()) {
-                podcastsOutput.append(episode.getName()).append(" - ").append(episode.getDescription()).append(", ");
+                podcastsOutput.append(episode.getName()).append(" - ").
+                        append(episode.getDescription()).append(", ");
             }
             if (!podcastsOutput.isEmpty()) {
                 podcastsOutput.setLength(podcastsOutput.length() - 2);
@@ -40,7 +46,8 @@ public class HostPage extends Page{
 
         StringBuilder announcementsOutput = new StringBuilder();
         for (Announcement announcement : selectedHost.getAnnouncements()) {
-            announcementsOutput.append(announcement.getName()).append(":\n\t").append(announcement.getDescription()).append("\n");
+            announcementsOutput.append(announcement.getName()).append(":\n\t").
+                    append(announcement.getDescription()).append("\n");
         }
 
         return String.format("Podcasts:\n\t[%s]\n\nAnnouncements:\n\t[%s]",
