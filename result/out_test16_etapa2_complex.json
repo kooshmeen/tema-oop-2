@@ -25962,9 +25962,13 @@
 }, {
   "command" : "getTop5Songs",
   "timestamp" : 14850,
-  "result" : [ "Don't", "Whatever You Need", "Start Me Up", "The Man", "Delicate" ]
+  "result" : [ "Soul Pandora", "Adventure Infinity", "Starlight Rapture", "Pinnacle Cascade", "Heart Utopia" ]
 }, {
   "command" : "getTop5Albums",
   "result" : [ "Bad Dirt", "Teen Revolution", "Breezy View", "Groovy Harmonies", "Alone Hood" ],
+  "timestamp" : 14850
+}, {
+  "command" : "getTop5Artists",
+  "result" : [ "jacobdean", "glester", "mccarthyluis", "jsimpson", "amanda16" ],
   "timestamp" : 14850
 } ]

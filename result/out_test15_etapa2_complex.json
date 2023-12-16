@@ -26046,9 +26046,13 @@
 }, {
   "command" : "getTop5Songs",
   "timestamp" : 14849,
-  "result" : [ "Stairway to Heaven", "Money Trees", "Under Pressure", "Dream On", "Whatever You Need" ]
+  "result" : [ "Utopia Harmony", "Celestial Soul", "Ethereal Rapture", "Whirlwind Whirlwind", "Night Utopia" ]
 }, {
   "command" : "getTop5Albums",
   "result" : [ "Bad Guide", "Teen Dreams", "Bad Hood", "Heroic Hood", "Groovy View" ],
+  "timestamp" : 14849
+}, {
+  "command" : "getTop5Artists",
+  "result" : [ "leslie27", "amanda16", "jacobdean", "barmstrong", "cbutler" ],
   "timestamp" : 14849
 } ]

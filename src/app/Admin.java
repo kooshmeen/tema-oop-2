@@ -151,7 +151,16 @@ public final class Admin {
      * @return the top 5 songs
      */
     public static List<String> getTop5Songs() {
-        List<Song> sortedSongs = new ArrayList<>(songs);
+        ArrayList<Song> sortedSongs = new ArrayList<>(songs);
+        for (User user : users) {
+            for (Song song : user.getLikedSongs()) {
+                for (Song song2 : sortedSongs) {
+                    if (song.getName().equals(song2.getName())) {
+                        song2.like();
+                    }
+                }
+            }
+        }
         sortedSongs.sort(Comparator.comparingInt(Song::getLikes).reversed());
         List<String> topSongs = new ArrayList<>();
         int count = 0;
@@ -162,6 +171,7 @@ public final class Admin {
             topSongs.add(song.getName());
             count++;
         }
+
         return topSongs;
     }
 
@@ -435,6 +445,11 @@ public final class Admin {
             if (user.getUsername().equals(username)) {
                 if (!(user instanceof Host) && !(user instanceof Artist)) {
                     // regular users can be deleted
+                    for (Song song : songs) {
+                        if (user.getLikedSongs().contains(song)) {
+                            song.dislike();
+                        }
+                    }
                     for (User user2 : users) {
                         // removes the user from the followed playlists of the other users
                         for (Playlist followedPlaylist : user2.getFollowedPlaylists()) {
@@ -452,7 +467,7 @@ public final class Admin {
                         }
                     }
                     for (Song song : songs) {
-                        if (user.getLikedSongs().contains(song)) {
+                        if (user.showPreferredSongs().contains(song.getName())) {
                             song.dislike();
                         }
                     }
