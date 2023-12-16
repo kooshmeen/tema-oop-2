@@ -12,7 +12,6 @@ import app.user.Artist;
 import app.user.Host;
 import app.user.User;
 import app.utils.Enums;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -48,7 +47,7 @@ public final class CommandRunner {
         if (user == null) {
             results = null;
             message = "Search returned 0 results";
-        } else if (user.isConnectionOnline()){
+        } else if (user.isConnectionOnline()) {
             results = user.search(filters, type);
             if (results != null) {
                 message = "Search returned " + results.size() + " results";
@@ -494,6 +493,11 @@ public final class CommandRunner {
         return objectNode;
     }
 
+    /**
+     * switch connection status object node.
+     * @param commandInput the command input
+     * @return if regular user, return the message, else return exception message
+     */
     public static ObjectNode switchConnectionStatus(final CommandInput commandInput) {
         User user = Admin.getUser(commandInput.getUsername());
         String message = null;
@@ -514,6 +518,11 @@ public final class CommandRunner {
         return objectNode;
     }
 
+    /**
+     * get online users object node.
+     * @param commandInput the command input
+     * @return online users
+     */
     public static ObjectNode getOnlineUsers(final CommandInput commandInput) {
         List<String> onlineUsers = Admin.getOnlineUsers();
 
@@ -524,6 +533,12 @@ public final class CommandRunner {
 
         return objectNode;
     }
+
+    /**
+     * adds a user
+     * @param commandInput the command input
+     * @return the created user
+     */
     public static ObjectNode addUser(final CommandInput commandInput) {
         String message = Admin.addUser(commandInput.getUsername(), commandInput.getAge(),
                 commandInput.getCity(), commandInput.getType());

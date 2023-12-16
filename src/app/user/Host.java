@@ -10,17 +10,28 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 @Getter
-public class Host extends User{
-    public Host(String username, int age, String city) {
+public class Host extends User {
+    public Host(final String username, final int age, final String city) {
             super(username, age, city);
         }
     private ArrayList<Podcast> podcasts = new ArrayList<>();
     private ArrayList<Announcement> announcements = new ArrayList<>();
+
+    /**
+     * since the host is njot a regular user it can't switch the connection status
+     * @return
+     */
     @Override
     public String switchConnectionStatus() {
         return null;
     }
-    public String addPodcast(Podcast podcast) {
+
+    /**
+     * adds a new podcast to the host's list of podcasts
+     * @param podcast the podcast to be added
+     * @return the messahe
+     */
+    public String addPodcast(final Podcast podcast) {
         if (podcasts == null) {
             podcasts = new ArrayList<>();
         }
@@ -38,7 +49,14 @@ public class Host extends User{
         podcasts.add(podcast);
         return getUsername() + " has added new podcast successfully.";
     }
-    public String addAnnouncement(String podcastName, String message) {
+
+    /**
+     * adds a new announcement to the host's list of announcements
+     * @param podcastName the name of the podcast
+     * @param message the message of the announcement
+     * @return the message
+     */
+    public String addAnnouncement(final String podcastName, final String message) {
         if (announcements == null) {
             announcements = new ArrayList<>();
         }
@@ -50,7 +68,13 @@ public class Host extends User{
         announcements.add(new Announcement(podcastName, message));
         return getUsername() + " has successfully added new announcement.";
     }
-    public String removeAnnouncement(String podcastName) {
+
+    /**
+     * removes an announcement from the host's list of announcements
+     * @param podcastName the name of the podcast
+     * @return the message
+     */
+    public String removeAnnouncement(final String podcastName) {
         if (announcements == null) {
             announcements = new ArrayList<>();
         }
@@ -62,21 +86,33 @@ public class Host extends User{
         }
         return getUsername() + " has no announcement with the given name.";
     }
+
+    /**
+     * shows the podcasts of the host
+     * @return
+     */
     public ArrayList<Podcast> showPodcasts() {
         if (podcasts == null) {
             podcasts = new ArrayList<>();
         }
         return podcasts;
     }
-    public String removePodcast(String podcastName) {
+
+    /**
+     * removes a podcast from the host's list of podcasts
+     * @param podcastName the name of the podcast
+     * @return the message
+     */
+    public String removePodcast(final String podcastName) {
         if (podcasts == null) {
             podcasts = new ArrayList<>();
         }
         for (Podcast podcast : podcasts) {
             if (podcast.getName().equals(podcastName)) {
                 for (User user : Admin.getUsers()) {
-                    if (user.getPlayer().getSource() != null &&
-                            user.getPlayer().getSource().getAudioCollection().getName().equals(podcastName)) {
+                    if (user.getPlayer().getSource() != null
+                            && user.getPlayer().getSource().getAudioCollection().getName()
+                                    .equals(podcastName)) {
                         return getUsername() + " can't delete this podcast.";
                     }
                 }

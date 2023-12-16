@@ -5,7 +5,10 @@ import app.audio.Collections.*;
 import app.audio.Files.AudioFile;
 import app.audio.Files.Song;
 import app.audio.LibraryEntry;
-import app.pages.*;
+import app.pages.ArtistPage;
+import app.pages.HostPage;
+import app.pages.HomePage;
+import app.pages.LikedContentPage;
 import app.player.Player;
 import app.player.PlayerStats;
 import app.searchBar.Filters;
@@ -106,8 +109,8 @@ public class User {
      * @return the array list
      */
     public ArrayList<String> search(final Filters filters, final String type) {
-        if (!type.equals("artist") && !type.equals("album") &&
-                !type.equals("host")) { // search normal (melodii, podcasturi, playlisturi)
+        if (!type.equals("artist") && !type.equals("album")
+                && !type.equals("host")) { // search normal (melodii, podcasturi, playlisturi)
             lastSearchedArtists = new ArrayList<>();
             selectedAlbum = null;
             selectedPlaylist = null;
@@ -147,7 +150,7 @@ public class User {
                 lastSearchedHost = true;
             }
             return results;
-        } else if (type.equals("album")){ // search album
+        } else if (type.equals("album")) { // search album
             lastSearchedAlbums = new ArrayList<>();
             selectedAlbum = null;
             searchBar.clearSelection();
@@ -158,11 +161,13 @@ public class User {
                 lastSearchedAlbum = true;
                 results = new ArrayList<>();
                 for (Album album : Admin.getAlbums()) {
-                    if (filters.getName() != null && album.getName().startsWith(filters.getName())) {
+                    if (filters.getName() != null && album.getName().startsWith(filters.
+                            getName())) {
                         results.add(album.getName());
                         lastSearchedAlbums.add(album);
                     }
-                    if (filters.getArtist() != null && album.getOwner().startsWith(filters.getOwner())
+                    if (filters.getArtist() != null && album.getOwner().startsWith(filters.
+                            getOwner())
                             || album.getOwner().equals(filters.getOwner())) {
                         results.add(album.getName());
                         lastSearchedAlbums.add(album);
@@ -260,7 +265,8 @@ public class User {
         loaded = false;
         if (selectedAlbum != null) {
 
-            Playlist albumAsPlaylist = new Playlist(selectedAlbum.getName(), selectedAlbum.getOwner(), 0);
+            Playlist albumAsPlaylist = new Playlist(selectedAlbum.getName(),
+                    selectedAlbum.getOwner(),0);
             // since loading a playlist is already implemented
             // we can create a playlist object that copies the album's songs
             for (Song song : selectedAlbum.getSongs()) {
@@ -642,6 +648,11 @@ public class User {
         String preferredGenre = mostLikedIndex != -1 ? genres[mostLikedIndex] : "unknown";
         return "This user's preferred genre is %s.".formatted(preferredGenre);
     }
+
+    /**
+     * switches from online to offline
+     * @return the message
+     */
     public String switchConnectionStatus() {
         if (!connectionOnline) {
             connectionOnline = true;
@@ -652,6 +663,11 @@ public class User {
         }
         return username + " has changed status successfully.";
     }
+
+    /**
+     * prints the current page
+     * @return the contents of the page
+     */
     public String printCurrentPage() {
         if (!connectionOnline) {
             return username + " is offline.";
@@ -666,6 +682,12 @@ public class User {
             return hostPage.displayContent();
         }
     }
+
+    /**
+     * changes the page between homepahe and likedcontentpage, if online
+     * @param nextPage the page to change to
+     * @return the message
+     */
     public String changePage(final String nextPage) {
         selectedHost = null;
         selectedArtist = null;

@@ -19,9 +19,9 @@ public class Artist extends User {
     private ArrayList<Event> events;
     @Getter
     private ArrayList<Merch> merch;
-    private final static int MAX_DAYS = 31;
-    private final static int MAX_MONTHS = 12;
-    private final static int MAX_DAYS_FEBRUARY = 28;
+    private final int maxdays = 31;
+    private final int maxmonths = 12;
+    private final int maxdaysfebruary = 28;
     /**
      * Instantiates a new User.
      *
@@ -93,8 +93,8 @@ public class Artist extends User {
         int day = date.getDay();
         int month = date.getMonth();
         int year = date.getYear();
-        if (day < 1 || day > MAX_DAYS || month < 1 || month > MAX_MONTHS
-                || year < 0 || (month == 2 && day > MAX_DAYS_FEBRUARY)) {
+        if (day < 1 || day > maxdays || month < 1 || month > maxmonths
+                || year < 0 || (month == 2 && day > maxdaysfebruary)) {
             return "Event for " + getUsername() + " does not have a valid date.";
         }
         events.add(new Event(eventName, date, description));
@@ -138,12 +138,13 @@ public class Artist extends User {
         for (Album album : albums) {
             if (album.getName().equals(albumName)) {
                 for (User user : Admin.getUsers()) {
-                    if (user.getSelectedAlbum() != null &&
-                            user.getSelectedAlbum().getName().equals(albumName)) {
+                    if (user.getSelectedAlbum() != null
+                            && user.getSelectedAlbum().getName().equals(albumName)) {
                         return username + " can't delete this album.";
                     }
-                    if (user.getPlayer().getCurrentAudioFile() != null &&
-                            user.getPlayer().getCurrentAudioFile().getName().equals(albumName)) {
+                    if (user.getPlayer().getCurrentAudioFile() != null
+                            && user.getPlayer().getCurrentAudioFile().getName()
+                            .equals(albumName)) {
                         return username + " can't delete this album.";
                     }
                     for (Playlist playlist : user.getPlaylists()) {
